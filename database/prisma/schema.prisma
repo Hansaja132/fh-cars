@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SourceType {
+  OFFICIAL
+  COMMUNITY
+  DATABASE
+  MANUAL
+  OTHER
+}
+
+enum AdminRole {
+  ADMIN
+  EDITOR
+}
+
+model Brand {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  slug      String   @unique
+  country   String?
+  logoUrl   String?  @map("logo_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  cars Car[]
+
+  @@map("brands")
+}
+
+model Car {
+  id          Int      @id @default(autoincrement())
+  carOrdinal  Int?     @unique @map("car_ordinal")
+  year        Int
+  brandId     Int      @map("brand_id")
+  model       String
+  fullName    String   @map("full_name")
+  class       String
+  basePi      Int      @map("base_pi")
+  drivetrain  String
+  carType     String   @map("car_type")
+  country     String
+  collection  String?
+  isDlc       Boolean  @default(false) @map("is_dlc")
+  isAvailable Boolean  @default(true) @map("is_available")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  brand   Brand        @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  stats   CarStats?
+  engine  CarEngine?
+  images  CarImage[]
+  sources CarSource[]
+
+  @@index([carOrdinal])
+  @@index([brandId])
+  @@index([year])
+  @@index([class])
+  @@index([basePi])
+  @@index([drivetrain])
+  @@index([model])
+  @@map("cars")
+}
+
+model CarStats {
+  id           Int      @id @default(autoincrement())
+  carId        Int      @unique @map("car_id")
+  speed        Float?
+  handling     Float?
+  acceleration Float?
+  launch       Float?
+  braking      Float?
+  offroad      Float?
+  powerHp      Int?     @map("power_hp")
+  torqueNm     Int?     @map("torque_nm")
+  weightKg     Int?     @map("weight_kg")
+  topSpeedKmh  Int?     @map("top_speed_kmh")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  car Car @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@map("car_stats")
+}
+
+model CarEngine {
+  id             Int      @id @default(autoincrement())
+  carId          Int      @unique @map("car_id")
+  engineType     String?  @map("engine_type")
+  engineLayout   String?  @map("engine_layout")
+  cylinders      Int?
+  displacementCc Int?     @map("displacement_cc")
+  aspiration     String?
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  car Car @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@map("car_engines")
+}
+
+model CarImage {
+  id           Int      @id @default(autoincrement())
+  carId        Int      @map("car_id")
+  imageUrl     String   @map("image_url")
+  thumbnailUrl String?  @map("thumbnail_url")
+  altText      String?  @map("alt_text")
+  isPrimary    Boolean  @default(false) @map("is_primary")
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  car Car @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@index([carId])
+  @@map("car_images")
+}
+
+model CarSource {
+  id             Int        @id @default(autoincrement())
+  carId          Int        @map("car_id")
+  sourceName     String     @map("source_name")
+  sourceUrl      String?    @map("source_url")
+  sourceType     SourceType @default(COMMUNITY) @map("source_type")
+  verified       Boolean    @default(false)
+  lastVerifiedAt DateTime?  @map("last_verified_at")
+  createdAt      DateTime   @default(now()) @map("created_at")
+
+  car Car @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@index([carId])
+  @@map("car_sources")
+}
+
+model AdminUser {
+  id           Int        @id @default(autoincrement())
+  username     String     @unique
+  email        String     @unique
+  passwordHash String     @map("password_hash")
+  role         AdminRole  @default(ADMIN)
+  isActive     Boolean    @default(true) @map("is_active")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+  lastLogin    DateTime?  @map("last_login")
+
+  auditLogs AuditLog[]
+
+  @@map("admin_users")
+}
+
+model AuditLog {
+  id          Int      @id @default(autoincrement())
+  adminUserId Int?     @map("admin_user_id")
+  action      String
+  entityType  String   @map("entity_type")
+  entityId    String?  @map("entity_id")
+  details     String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  adminUser AdminUser? @relation(fields: [adminUserId], references: [id], onDelete: SetNull)
+
+  @@index([adminUserId])
+  @@index([action])
+  @@map("audit_logs")
+}
