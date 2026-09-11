@@ -13,6 +13,7 @@ const classColors: Record<string, { bg: string; text: string; border: string }> 
   A: { bg: 'bg-orange-600', text: 'text-white', border: 'border-orange-500' },
   S1: { bg: 'bg-rose-600', text: 'text-white', border: 'border-rose-500' },
   S2: { bg: 'bg-purple-600', text: 'text-white', border: 'border-purple-500' },
+  R: { bg: 'bg-cyan-600', text: 'text-white', border: 'border-cyan-400' },
   X: { bg: 'bg-slate-900', text: 'text-amber-400', border: 'border-amber-400' },
 };
 

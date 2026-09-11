@@ -388,7 +388,7 @@ export const AdminDashboard: React.FC = () => {
                     onChange={(e) => setFormState({ ...formState, class: e.target.value })}
                     className="w-full bg-slate-950 text-white rounded-lg p-2.5 border border-slate-700 mt-1"
                   >
-                    {['D', 'C', 'B', 'A', 'S1', 'S2', 'X'].map((c) => (
+                    {['D', 'C', 'B', 'A', 'S1', 'S2', 'R', 'X'].map((c) => (
                       <option key={c} value={c}>
                         Class {c}
                       </option>

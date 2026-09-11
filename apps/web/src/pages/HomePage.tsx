@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { apiService } from '../services/api';
-import { Search, Flame, ShieldCheck, Zap, Database, ArrowRight, Award } from 'lucide-react';
+import { Search, Flame, Database, ArrowRight } from 'lucide-react';
 import { ClassBadge } from '../components/ClassBadge';
 import { CarCard } from '../components/CarCard';
 
-const CLASSES = ['D', 'C', 'B', 'A', 'S1', 'S2', 'X'];
+const CLASSES = ['D', 'C', 'B', 'A', 'S1', 'S2', 'R', 'X'];
 
 export const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -113,7 +113,7 @@ export const HomePage: React.FC = () => {
             <div className="text-xs uppercase tracking-wider font-semibold text-red-400">Manufacturers</div>
           </div>
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center space-y-1">
-            <div className="text-3xl sm:text-4xl font-extrabold font-display text-white">7</div>
+            <div className="text-3xl sm:text-4xl font-extrabold font-display text-white">8</div>
             <div className="text-xs uppercase tracking-wider font-semibold text-red-400">Classes (D to X)</div>
           </div>
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center space-y-1">
@@ -131,7 +131,7 @@ export const HomePage: React.FC = () => {
             <p className="text-xs text-slate-400 mt-1">Filter cars by Forza Horizon PI performance tier</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3">
           {CLASSES.map((cls) => (
             <Link
               key={cls}

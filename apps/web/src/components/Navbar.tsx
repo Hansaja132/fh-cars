@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Car, Search, Shield, Sun, Moon, Scale, Code, Menu, X, Flame } from 'lucide-react';
+import { Search, Shield, Sun, Moon, Flame, Menu, X } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 
 export const Navbar: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ export const Navbar: React.FC = () => {
             </NavLink>
           </div>
 
-          {/* User & Controls */}
+          {/* Controls & Active Admin Session Indicator */}
           <div className="hidden md:flex items-center space-x-3">
             {/* Theme Toggle */}
             <button
@@ -85,8 +85,8 @@ export const Navbar: React.FC = () => {
               {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-300" />}
             </button>
 
-            {/* Admin Link */}
-            {isAuthenticated ? (
+            {/* Render Admin Panel badge ONLY when authenticated */}
+            {isAuthenticated && (
               <div className="flex items-center space-x-2">
                 <Link
                   to="/admin"
@@ -102,14 +102,6 @@ export const Navbar: React.FC = () => {
                   Logout
                 </button>
               </div>
-            ) : (
-              <Link
-                to="/admin/login"
-                className="text-xs font-medium text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 border border-slate-700 px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1"
-              >
-                <Shield className="w-3.5 h-3.5" />
-                <span>Admin Login</span>
-              </Link>
             )}
           </div>
 
@@ -149,10 +141,8 @@ export const Navbar: React.FC = () => {
             <Link to="/compare" onClick={() => setMobileMenuOpen(false)} className="text-slate-200 py-1.5">Compare Cars</Link>
             <Link to="/api" onClick={() => setMobileMenuOpen(false)} className="text-slate-200 py-1.5">API Docs</Link>
             <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="text-slate-200 py-1.5">About</Link>
-            {isAuthenticated ? (
+            {isAuthenticated && (
               <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="text-red-400 py-1.5 font-bold">Admin Dashboard</Link>
-            ) : (
-              <Link to="/admin/login" onClick={() => setMobileMenuOpen(false)} className="text-slate-300 py-1.5">Admin Login</Link>
             )}
           </div>
         </div>

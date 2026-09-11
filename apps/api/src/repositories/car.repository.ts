@@ -197,6 +197,7 @@ export class CarRepository {
       A: 0,
       S1: 0,
       S2: 0,
+      R: 0,
       X: 0,
     };
 

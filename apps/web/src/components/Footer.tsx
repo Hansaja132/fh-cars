@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Flame, Code, Database, ShieldCheck } from 'lucide-react';
+import { Flame, Code, Database } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -41,12 +41,11 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Legal / System */}
+          {/* Legal / Information */}
           <div>
             <h4 className="text-white font-display font-semibold text-sm mb-3">Platform</h4>
             <ul className="space-y-2 text-xs">
               <li><Link to="/about" className="hover:text-red-400 transition-colors">About & Sources</Link></li>
-              <li><Link to="/admin/login" className="hover:text-red-400 transition-colors flex items-center space-x-1"><ShieldCheck className="w-3.5 h-3.5"/><span>Admin Portal</span></Link></li>
               <li className="text-slate-500 pt-2 text-[11px]">Not affiliated with Playground Games or Turn 10 Studios.</li>
             </ul>
           </div>

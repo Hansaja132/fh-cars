@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, RotateCcw, Check } from 'lucide-react';
+import { Filter, RotateCcw } from 'lucide-react';
 import { Brand } from '@fh6-cars/shared';
 
 interface FilterSidebarProps {
@@ -18,7 +18,7 @@ interface FilterSidebarProps {
   onReset: () => void;
 }
 
-const CLASSES = ['D', 'C', 'B', 'A', 'S1', 'S2', 'X'];
+const CLASSES = ['D', 'C', 'B', 'A', 'S1', 'S2', 'R', 'X'];
 const DRIVETRAINS = ['FWD', 'RWD', 'AWD'];
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = ({
