@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  :root,
+  .light {
     --background: #F4F7FA;
     --foreground: #10202F;
     --surface: #FFFFFF;
@@ -28,19 +29,19 @@
     --warning: #F59E0B;
     --danger: #EF4444;
 
-    /* RGB channel equivalents for opacity support */
-    --background-rgb: 244, 247, 250;
-    --foreground-rgb: 16, 32, 47;
-    --surface-rgb: 255, 255, 255;
-    --card-rgb: 255, 255, 255;
-    --elevated-rgb: 255, 255, 255;
-    --border-rgb: 217, 226, 236;
-    --primary-rgb: 0, 151, 178;
-    --primary-hover-rgb: 0, 127, 149;
-    --secondary-rgb: 53, 111, 230;
-    --secondary-hover-rgb: 47, 99, 207;
-    --muted-rgb: 232, 238, 244;
-    --muted-foreground-rgb: 82, 98, 115;
+    /* Space-separated RGB channel equivalents for Tailwind opacity support */
+    --background-rgb: 244 247 250;
+    --foreground-rgb: 16 32 47;
+    --surface-rgb: 255 255 255;
+    --card-rgb: 255 255 255;
+    --elevated-rgb: 255 255 255;
+    --border-rgb: 217 226 236;
+    --primary-rgb: 0 151 178;
+    --primary-hover-rgb: 0 127 149;
+    --secondary-rgb: 53 111 230;
+    --secondary-hover-rgb: 47 99 207;
+    --muted-rgb: 232 238 244;
+    --muted-foreground-rgb: 82 98 115;
 
     /* FH6 Class colors */
     --class-d: #94A3B8;
@@ -77,19 +78,19 @@
     --warning: #F59E0B;
     --danger: #EF4444;
 
-    /* RGB channel equivalents */
-    --background-rgb: 11, 15, 20;
-    --foreground-rgb: 241, 245, 249;
-    --surface-rgb: 17, 24, 32;
-    --card-rgb: 21, 30, 39;
-    --elevated-rgb: 24, 33, 43;
-    --border-rgb: 38, 51, 65;
-    --primary-rgb: 0, 184, 217;
-    --primary-hover-rgb: 34, 211, 238;
-    --secondary-rgb: 76, 141, 255;
-    --secondary-hover-rgb: 93, 154, 255;
-    --muted-rgb: 24, 33, 43;
-    --muted-foreground-rgb: 168, 179, 194;
+    /* Space-separated RGB channel equivalents */
+    --background-rgb: 11 15 20;
+    --foreground-rgb: 241 245 249;
+    --surface-rgb: 17 24 32;
+    --card-rgb: 21 30 39;
+    --elevated-rgb: 24 33 43;
+    --border-rgb: 38 51 65;
+    --primary-rgb: 0 184 217;
+    --primary-hover-rgb: 34 211 238;
+    --secondary-rgb: 76 141 255;
+    --secondary-hover-rgb: 93 154 255;
+    --muted-rgb: 24 33 43;
+    --muted-foreground-rgb: 168 179 194;
   }
 }
 
@@ -107,7 +108,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 /* Glassmorphism utility */
 .glass-panel {
-  background: rgba(var(--surface-rgb), 0.85);
+  background: rgb(var(--surface-rgb) / 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-color: var(--border);
@@ -124,10 +125,10 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(var(--primary-rgb), 0.5);
+  background: rgb(var(--primary-rgb) / 0.5);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(var(--primary-rgb), 0.8);
+  background: rgb(var(--primary-rgb) / 0.8);
 }
