@@ -11,7 +11,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center text-slate-400 text-sm">
+      <div className="min-h-[60vh] flex items-center justify-center text-text-muted text-sm font-medium">
         Verifying authorization...
       </div>
     );

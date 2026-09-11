@@ -4,21 +4,101 @@
 
 @layer base {
   :root {
-    --background: 222 47% 7%;
-    --foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
+    --background: #F4F7FA;
+    --foreground: #10202F;
+    --surface: #FFFFFF;
+    --card: #FFFFFF;
+    --elevated: #FFFFFF;
+    --border: #D9E2EC;
+
+    --primary: #0097B2;
+    --primary-hover: #007F95;
+    --primary-foreground: #FFFFFF;
+
+    --secondary: #356FE6;
+    --secondary-hover: #2F63CF;
+
+    --muted: #E8EEF4;
+    --muted-foreground: #526273;
+
+    --text-secondary: #526273;
+    --text-muted: #7B8794;
+
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+
+    /* RGB channel equivalents for opacity support */
+    --background-rgb: 244, 247, 250;
+    --foreground-rgb: 16, 32, 47;
+    --surface-rgb: 255, 255, 255;
+    --card-rgb: 255, 255, 255;
+    --elevated-rgb: 255, 255, 255;
+    --border-rgb: 217, 226, 236;
+    --primary-rgb: 0, 151, 178;
+    --primary-hover-rgb: 0, 127, 149;
+    --secondary-rgb: 53, 111, 230;
+    --secondary-hover-rgb: 47, 99, 207;
+    --muted-rgb: 232, 238, 244;
+    --muted-foreground-rgb: 82, 98, 115;
+
+    /* FH6 Class colors */
+    --class-d: #94A3B8;
+    --class-c: #22C55E;
+    --class-b: #3B82F6;
+    --class-a: #8B5CF6;
+    --class-s1: #F97316;
+    --class-s2: #EF4444;
+    --class-x: #EAB308;
   }
 
-  .light {
-    --background: 0 0% 98%;
-    --foreground: 222.2 84% 4.9%;
-    --border: 214.3 31.8% 91.4%;
+  .dark {
+    --background: #0B0F14;
+    --foreground: #F1F5F9;
+    --surface: #111820;
+    --card: #151E27;
+    --elevated: #18212B;
+    --border: #263341;
+
+    --primary: #00B8D9;
+    --primary-hover: #22D3EE;
+    --primary-foreground: #061018;
+
+    --secondary: #4C8DFF;
+    --secondary-hover: #5D9AFF;
+
+    --muted: #18212B;
+    --muted-foreground: #A8B3C2;
+
+    --text-secondary: #A8B3C2;
+    --text-muted: #718096;
+
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+
+    /* RGB channel equivalents */
+    --background-rgb: 11, 15, 20;
+    --foreground-rgb: 241, 245, 249;
+    --surface-rgb: 17, 24, 32;
+    --card-rgb: 21, 30, 39;
+    --elevated-rgb: 24, 33, 43;
+    --border-rgb: 38, 51, 65;
+    --primary-rgb: 0, 184, 217;
+    --primary-hover-rgb: 34, 211, 238;
+    --secondary-rgb: 76, 141, 255;
+    --secondary-hover-rgb: 93, 154, 255;
+    --muted-rgb: 24, 33, 43;
+    --muted-foreground-rgb: 168, 179, 194;
   }
 }
 
 body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3, h4, h5, h6, .font-display {
@@ -27,15 +107,10 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 /* Glassmorphism utility */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(var(--surface-rgb), 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.light .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-color: var(--border);
 }
 
 /* Custom Scrollbar */
@@ -45,14 +120,14 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(230, 57, 70, 0.5);
+  background: rgba(var(--primary-rgb), 0.5);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(230, 57, 70, 0.8);
+  background: rgba(var(--primary-rgb), 0.8);
 }

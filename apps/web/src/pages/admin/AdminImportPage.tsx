@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { apiService } from '../../services/api';
 import { ImportSummary } from '@fh6-cars/shared';
-import { FileSpreadsheet, UploadCloud, ArrowLeft, CheckCircle, AlertTriangle, FileText } from 'lucide-react';
+import { FileSpreadsheet, UploadCloud, ArrowLeft, CheckCircle } from 'lucide-react';
 
 export const AdminImportPage: React.FC = () => {
   const [fileContent, setFileContent] = useState<string>('');
@@ -46,30 +46,30 @@ export const AdminImportPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      <Link to="/admin" className="inline-flex items-center space-x-2 text-xs font-semibold text-slate-400 hover:text-white">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 transition-colors">
+      <Link to="/admin" className="inline-flex items-center space-x-2 text-xs font-semibold text-text-muted hover:text-foreground transition-colors">
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Admin Dashboard</span>
       </Link>
 
-      <div className="bg-slate-900/90 border border-slate-800 p-8 rounded-3xl space-y-6">
+      <div className="bg-card border border-border p-8 rounded-3xl space-y-6 shadow-sm">
         <div className="space-y-2">
-          <div className="flex items-center space-x-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+          <div className="flex items-center space-x-2 text-primary text-xs font-bold uppercase tracking-wider">
             <FileSpreadsheet className="w-4 h-4" />
             <span>Batch Data Ingestion</span>
           </div>
-          <h1 className="font-display font-extrabold text-3xl text-white">Import Cars (JSON / CSV)</h1>
-          <p className="text-xs text-slate-400">
+          <h1 className="font-display font-extrabold text-3xl text-foreground">Import Cars (JSON / CSV)</h1>
+          <p className="text-xs text-text-muted">
             Upload or paste formatted car data. Records will be validated before insertion.
           </p>
         </div>
 
         {/* Upload Zone */}
-        <div className="border-2 border-dashed border-slate-700 hover:border-red-500/50 p-8 rounded-2xl text-center space-y-4 transition-colors bg-slate-950/40">
-          <UploadCloud className="w-10 h-10 text-slate-400 mx-auto" />
+        <div className="border-2 border-dashed border-border hover:border-primary p-8 rounded-2xl text-center space-y-4 transition-colors bg-surface/50">
+          <UploadCloud className="w-10 h-10 text-text-muted mx-auto" />
           <div className="space-y-1">
-            <div className="text-sm font-bold text-white">Choose cars.json or cars.csv</div>
-            <div className="text-xs text-slate-400">Supports array of JSON objects or CSV with headers</div>
+            <div className="text-sm font-bold text-foreground">Choose cars.json or cars.csv</div>
+            <div className="text-xs text-text-muted">Supports array of JSON objects or CSV with headers</div>
           </div>
           <input
             type="file"
@@ -80,23 +80,23 @@ export const AdminImportPage: React.FC = () => {
           />
           <label
             htmlFor="file-input-btn"
-            className="inline-block bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs px-4 py-2 rounded-xl cursor-pointer border border-slate-700"
+            className="inline-block bg-surface hover:bg-muted text-foreground font-bold text-xs px-4 py-2 rounded-xl cursor-pointer border border-border transition-colors shadow-sm"
           >
             Select File
           </label>
-          {fileName && <div className="text-xs font-mono text-emerald-400">Selected: {fileName}</div>}
+          {fileName && <div className="text-xs font-mono text-primary font-bold">Selected: {fileName}</div>}
         </div>
 
         {/* Format Selector & Textarea Fallback */}
         <div className="space-y-2">
-          <div className="flex justify-between items-center text-xs font-semibold text-slate-300">
+          <div className="flex justify-between items-center text-xs font-semibold text-text-secondary">
             <span>Or Paste Raw Content Below</span>
             <div className="space-x-2">
               <button
                 type="button"
                 onClick={() => setFileType('json')}
-                className={`px-2 py-0.5 rounded font-mono text-xs ${
-                  fileType === 'json' ? 'bg-red-600 text-white' : 'bg-slate-800 text-slate-400'
+                className={`px-2 py-0.5 rounded font-mono text-xs transition-colors ${
+                  fileType === 'json' ? 'bg-primary text-primary-foreground font-bold' : 'bg-muted text-text-muted hover:text-foreground'
                 }`}
               >
                 JSON
@@ -104,8 +104,8 @@ export const AdminImportPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setFileType('csv')}
-                className={`px-2 py-0.5 rounded font-mono text-xs ${
-                  fileType === 'csv' ? 'bg-red-600 text-white' : 'bg-slate-800 text-slate-400'
+                className={`px-2 py-0.5 rounded font-mono text-xs transition-colors ${
+                  fileType === 'csv' ? 'bg-primary text-primary-foreground font-bold' : 'bg-muted text-text-muted hover:text-foreground'
                 }`}
               >
                 CSV
@@ -117,12 +117,12 @@ export const AdminImportPage: React.FC = () => {
             value={fileContent}
             onChange={(e) => setFileContent(e.target.value)}
             placeholder='[{"year": 2022, "brand": "Toyota", "model": "GR Supra", "class": "A", "basePi": 742, "drivetrain": "RWD", "carType": "Sports Car"}]'
-            className="w-full bg-slate-950 font-mono text-xs text-slate-200 p-4 rounded-xl border border-slate-800 focus:outline-none focus:border-red-500"
+            className="w-full bg-surface font-mono text-xs text-foreground placeholder:text-text-muted p-4 rounded-xl border border-border focus:outline-none focus:border-primary transition-colors"
           />
         </div>
 
         {errorMsg && (
-          <div className="bg-red-950/60 border border-red-500/40 p-4 rounded-xl text-xs text-red-200">
+          <div className="bg-danger/10 border border-danger/30 p-4 rounded-xl text-xs text-danger">
             {errorMsg}
           </div>
         )}
@@ -130,42 +130,42 @@ export const AdminImportPage: React.FC = () => {
         <button
           onClick={handleExecuteImport}
           disabled={isLoading || !fileContent.trim()}
-          className="w-full bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-500 hover:to-orange-400 text-white font-bold text-xs py-3 rounded-xl shadow-lg disabled:opacity-50"
+          className="w-full bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs py-3 rounded-xl shadow transition-transform active:scale-98 disabled:opacity-50"
         >
           {isLoading ? 'Processing & Validating Data...' : 'Run Data Import Process'}
         </button>
 
         {/* Results Summary Box */}
         {summary && (
-          <div className="bg-slate-950 border border-slate-800 p-6 rounded-2xl space-y-4">
-            <h3 className="font-display font-bold text-lg text-white flex items-center space-x-2">
-              <CheckCircle className="w-5 h-5 text-emerald-400" />
+          <div className="bg-surface border border-border p-6 rounded-2xl space-y-4 shadow-sm">
+            <h3 className="font-display font-bold text-lg text-foreground flex items-center space-x-2">
+              <CheckCircle className="w-5 h-5 text-success" />
               <span>Import Summary Report</span>
             </h3>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-mono">
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <div className="text-2xl font-bold text-white">{summary.total}</div>
-                <div className="text-[10px] text-slate-400 uppercase">Total Records</div>
+              <div className="bg-card p-3 rounded-xl border border-border">
+                <div className="text-2xl font-bold text-foreground">{summary.total}</div>
+                <div className="text-[10px] text-text-muted uppercase">Total Records</div>
               </div>
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <div className="text-2xl font-bold text-emerald-400">{summary.inserted}</div>
-                <div className="text-[10px] text-slate-400 uppercase">Inserted</div>
+              <div className="bg-card p-3 rounded-xl border border-border">
+                <div className="text-2xl font-bold text-success">{summary.inserted}</div>
+                <div className="text-[10px] text-text-muted uppercase">Inserted</div>
               </div>
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <div className="text-2xl font-bold text-amber-400">{summary.updated}</div>
-                <div className="text-[10px] text-slate-400 uppercase">Updated</div>
+              <div className="bg-card p-3 rounded-xl border border-border">
+                <div className="text-2xl font-bold text-warning">{summary.updated}</div>
+                <div className="text-[10px] text-text-muted uppercase">Updated</div>
               </div>
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <div className="text-2xl font-bold text-rose-400">{summary.errors}</div>
-                <div className="text-[10px] text-slate-400 uppercase">Errors</div>
+              <div className="bg-card p-3 rounded-xl border border-border">
+                <div className="text-2xl font-bold text-danger">{summary.errors}</div>
+                <div className="text-[10px] text-text-muted uppercase">Errors</div>
               </div>
             </div>
 
             {summary.details && summary.details.length > 0 && (
               <div className="space-y-1">
-                <div className="text-xs font-bold text-slate-300">Detailed Execution Logs:</div>
-                <div className="bg-slate-900 p-3 rounded-xl text-[11px] font-mono text-slate-300 max-h-48 overflow-y-auto space-y-1">
+                <div className="text-xs font-bold text-text-secondary">Detailed Execution Logs:</div>
+                <div className="bg-card p-3 rounded-xl text-[11px] font-mono text-text-secondary max-h-48 overflow-y-auto space-y-1 border border-border">
                   {summary.details.map((line, idx) => (
                     <div key={idx}>{line}</div>
                   ))}

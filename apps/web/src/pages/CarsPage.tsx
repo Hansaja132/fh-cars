@@ -69,7 +69,7 @@ export const CarsPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Search Header Bar */}
-      <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+      <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 bg-card border border-border p-4 rounded-2xl shadow-sm transition-colors">
         {/* Search */}
         <div className="relative flex-1">
           <input
@@ -77,18 +77,18 @@ export const CarsPage: React.FC = () => {
             placeholder="Search cars by name, model, country..."
             value={search}
             onChange={(e) => updateParam('search', e.target.value)}
-            className="w-full bg-slate-950 text-white text-sm rounded-xl pl-10 pr-4 py-2.5 border border-slate-700 focus:outline-none focus:border-red-500"
+            className="w-full bg-surface text-foreground placeholder:text-text-muted text-sm rounded-xl pl-10 pr-4 py-2.5 border border-border focus:outline-none focus:border-primary transition-colors"
           />
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+          <Search className="w-4 h-4 text-text-muted absolute left-3.5 top-3" />
         </div>
 
         {/* Sorting & Controls */}
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-            className="lg:hidden bg-slate-800 text-slate-200 px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1 border border-slate-700"
+            className="lg:hidden bg-surface text-foreground px-3 py-2 rounded-xl text-xs font-bold flex items-center space-x-1 border border-border hover:bg-muted"
           >
-            <SlidersHorizontal className="w-4 h-4" />
+            <SlidersHorizontal className="w-4 h-4 text-primary" />
             <span>Filters</span>
           </button>
 
@@ -99,7 +99,7 @@ export const CarsPage: React.FC = () => {
               updateParam('sort', s);
               updateParam('order', o);
             }}
-            className="bg-slate-950 text-white text-xs font-medium rounded-xl px-3 py-2.5 border border-slate-700 focus:outline-none focus:border-red-500"
+            className="bg-surface text-foreground text-xs font-medium rounded-xl px-3 py-2.5 border border-border focus:outline-none focus:border-primary transition-colors"
           >
             <option value="fullName-asc">Sort: Name (A-Z)</option>
             <option value="fullName-desc">Sort: Name (Z-A)</option>
@@ -164,21 +164,21 @@ export const CarsPage: React.FC = () => {
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-72 bg-slate-900 rounded-xl animate-pulse border border-slate-800" />
+                <div key={i} className="h-72 bg-elevated rounded-xl animate-pulse border border-border" />
               ))}
             </div>
           ) : isError ? (
-            <div className="bg-red-950/40 border border-red-500/40 p-8 rounded-xl text-center space-y-2 text-red-200">
+            <div className="bg-danger/10 border border-danger/30 p-8 rounded-xl text-center space-y-2 text-danger">
               <h3 className="font-bold text-lg">Unable to load cars</h3>
-              <p className="text-xs text-red-300">Ensure the API backend is running and accessible.</p>
+              <p className="text-xs opacity-90">Ensure the API backend is running and accessible.</p>
             </div>
           ) : carsData && carsData.data.length > 0 ? (
             <>
               {/* Results header */}
-              <div className="flex justify-between items-center text-xs text-slate-400">
+              <div className="flex justify-between items-center text-xs text-text-muted">
                 <span>
-                  Showing <strong className="text-white">{carsData.data.length}</strong> of{' '}
-                  <strong className="text-white">{carsData.pagination.total}</strong> cars
+                  Showing <strong className="text-foreground">{carsData.data.length}</strong> of{' '}
+                  <strong className="text-foreground">{carsData.pagination.total}</strong> cars
                 </span>
                 <span>Page {carsData.pagination.page} of {carsData.pagination.totalPages}</span>
               </div>
@@ -195,18 +195,18 @@ export const CarsPage: React.FC = () => {
                 <button
                   disabled={page <= 1}
                   onClick={() => updateParam('page', page - 1)}
-                  className="px-3 py-2 bg-slate-900 border border-slate-800 text-slate-300 rounded-lg text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-800 flex items-center space-x-1"
+                  className="px-3 py-2 bg-surface border border-border text-text-secondary rounded-lg text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted hover:text-foreground flex items-center space-x-1 transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span>Previous</span>
                 </button>
-                <div className="px-4 py-2 font-mono text-xs font-bold text-slate-300 bg-slate-950 rounded-lg border border-slate-800">
+                <div className="px-4 py-2 font-mono text-xs font-bold text-foreground bg-card rounded-lg border border-border">
                   {page} / {carsData.pagination.totalPages}
                 </div>
                 <button
                   disabled={page >= carsData.pagination.totalPages}
                   onClick={() => updateParam('page', page + 1)}
-                  className="px-3 py-2 bg-slate-900 border border-slate-800 text-slate-300 rounded-lg text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-800 flex items-center space-x-1"
+                  className="px-3 py-2 bg-surface border border-border text-text-secondary rounded-lg text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted hover:text-foreground flex items-center space-x-1 transition-colors"
                 >
                   <span>Next</span>
                   <ChevronRight className="w-4 h-4" />
@@ -214,11 +214,11 @@ export const CarsPage: React.FC = () => {
               </div>
             </>
           ) : (
-            <div className="bg-slate-900/60 border border-slate-800 p-12 rounded-2xl text-center space-y-4">
-              <div className="text-slate-400 font-display text-lg">No cars match your search filters</div>
+            <div className="bg-card border border-border p-12 rounded-2xl text-center space-y-4 shadow-sm">
+              <div className="text-text-muted font-display text-lg">No cars match your search filters</div>
               <button
                 onClick={handleResetFilters}
-                className="bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-4 py-2 rounded-xl"
+                className="bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs px-5 py-2.5 rounded-xl shadow transition-transform active:scale-95"
               >
                 Reset All Filters
               </button>

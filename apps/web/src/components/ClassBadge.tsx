@@ -7,14 +7,14 @@ interface ClassBadgeProps {
 }
 
 const classColors: Record<string, { bg: string; text: string; border: string }> = {
-  D: { bg: 'bg-blue-600', text: 'text-white', border: 'border-blue-500' },
-  C: { bg: 'bg-emerald-600', text: 'text-white', border: 'border-emerald-500' },
-  B: { bg: 'bg-amber-500', text: 'text-white', border: 'border-amber-400' },
-  A: { bg: 'bg-orange-600', text: 'text-white', border: 'border-orange-500' },
-  S1: { bg: 'bg-rose-600', text: 'text-white', border: 'border-rose-500' },
-  S2: { bg: 'bg-purple-600', text: 'text-white', border: 'border-purple-500' },
-  R: { bg: 'bg-cyan-600', text: 'text-white', border: 'border-cyan-400' },
-  X: { bg: 'bg-slate-900', text: 'text-amber-400', border: 'border-amber-400' },
+  D: { bg: 'bg-[#94A3B8]', text: 'text-slate-950 font-black', border: 'border-[#64748B]' },
+  C: { bg: 'bg-[#22C55E]', text: 'text-slate-950 font-black', border: 'border-[#16A34A]' },
+  B: { bg: 'bg-[#3B82F6]', text: 'text-white font-bold', border: 'border-[#2563EB]' },
+  A: { bg: 'bg-[#8B5CF6]', text: 'text-white font-bold', border: 'border-[#7C3AED]' },
+  S1: { bg: 'bg-[#F97316]', text: 'text-white font-bold', border: 'border-[#EA580C]' },
+  S2: { bg: 'bg-[#EF4444]', text: 'text-white font-bold', border: 'border-[#DC2626]' },
+  R: { bg: 'bg-[#00B8D9]', text: 'text-slate-950 font-black', border: 'border-[#0097B2]' },
+  X: { bg: 'bg-[#EAB308]', text: 'text-slate-950 font-black', border: 'border-[#CA8A04]' },
 };
 
 export const ClassBadge: React.FC<ClassBadgeProps> = ({ className = 'A', pi, size = 'md' }) => {
@@ -29,11 +29,11 @@ export const ClassBadge: React.FC<ClassBadgeProps> = ({ className = 'A', pi, siz
 
   return (
     <div
-      className={`inline-flex items-center font-bold font-display rounded-md shadow-md border ${style.bg} ${style.text} ${style.border} ${sizeClasses}`}
+      className={`inline-flex items-center font-display rounded-md shadow-md border ${style.bg} ${style.text} ${style.border} ${sizeClasses}`}
     >
-      <span className="uppercase tracking-wider">{normalizedClass}</span>
+      <span className="uppercase tracking-wider font-extrabold">{normalizedClass}</span>
       {pi !== undefined && (
-        <span className="opacity-90 border-l border-white/20 pl-1.5 font-mono font-extrabold">{pi}</span>
+        <span className="opacity-90 border-l border-current/20 pl-1.5 font-mono font-black">{pi}</span>
       )}
     </div>
   );
