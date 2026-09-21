@@ -19,6 +19,7 @@ import { ApiDocsPage } from './pages/ApiDocsPage';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminImportPage } from './pages/admin/AdminImportPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -71,8 +72,8 @@ export const App: React.FC = () => {
                     }
                   />
 
-                  {/* Fallback */}
-                  <Route path="*" element={<HomePage />} />
+                  {/* Fallback 404 Route */}
+                  <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </main>
               <Footer />

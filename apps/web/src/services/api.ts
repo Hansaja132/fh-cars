@@ -96,6 +96,16 @@ export const apiService = {
     return response.data.data;
   },
 
+  requestForgotPassword: async (email: string): Promise<{ message: string }> => {
+    const response = await apiClient.post('/auth/forgot-password', { email });
+    return response.data.data;
+  },
+
+  resetPassword: async (email: string, code: string, newPassword: string): Promise<{ message: string }> => {
+    const response = await apiClient.post('/auth/reset-password', { email, code, newPassword });
+    return response.data.data;
+  },
+
   // Admin CRUD
   createCar: async (carData: any): Promise<Car> => {
     const response = await apiClient.post('/admin/cars', carData);

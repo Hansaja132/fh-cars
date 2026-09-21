@@ -92,6 +92,16 @@ export const loginSchema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().email('Invalid email address'),
+});
+
+export const resetPasswordSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  code: z.string().length(6, 'Verification code must be exactly 6 digits'),
+  newPassword: z.string().min(6, 'Password must be at least 6 characters'),
+});
+
 export const importCarRecordSchema = z.object({
   carOrdinal: z.number().optional().nullable(),
   year: z.number(),

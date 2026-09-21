@@ -16,34 +16,41 @@ async function main() {
   console.log('🌱 Starting FH6 Cars database seeding...');
 
   // 1. Seed Initial Admin User
-  const adminEmail = 'admin@example.com';
-  const existingAdmin = await prisma.adminUser.findUnique({
-    where: { email: adminEmail },
-  });
+  const adminEmail = process.env.INITIAL_ADMIN_EMAIL;
+  const adminPassword = process.env.INITIAL_ADMIN_PASSWORD;
+  const adminUsername = process.env.INITIAL_ADMIN_USERNAME;
 
-  if (!existingAdmin) {
-    const passwordHash = await bcrypt.hash('password', 10);
-    const admin = await prisma.adminUser.create({
-      data: {
-        username: 'admin',
-        email: adminEmail,
-        passwordHash: passwordHash,
-        role: 'ADMIN',
-        isActive: true,
-      },
-    });
-    console.log(`👤 Created default admin user: ${admin.email}`);
-
-    await prisma.auditLog.create({
-      data: {
-        adminUserId: admin.id,
-        action: 'SEED_INITIALIZATION',
-        entityType: 'SYSTEM',
-        details: 'Initial system database seed completed.',
-      },
-    });
+  if (!adminEmail || !adminPassword) {
+    console.warn('⚠️ INITIAL_ADMIN_EMAIL or INITIAL_ADMIN_PASSWORD not set in environment. Skipping initial admin user creation.');
   } else {
-    console.log(`👤 Admin user ${adminEmail} already exists.`);
+    const existingAdmin = await prisma.adminUser.findUnique({
+      where: { email: adminEmail },
+    });
+
+    if (!existingAdmin) {
+      const passwordHash = await bcrypt.hash(adminPassword, 10);
+      const admin = await prisma.adminUser.create({
+        data: {
+          username: adminUsername || 'admin',
+          email: adminEmail,
+          passwordHash: passwordHash,
+          role: 'ADMIN',
+          isActive: true,
+        },
+      });
+      console.log(`👤 Created initial admin user: ${admin.email}`);
+
+      await prisma.auditLog.create({
+        data: {
+          adminUserId: admin.id,
+          action: 'SEED_INITIALIZATION',
+          entityType: 'SYSTEM',
+          details: 'Initial system database seed completed.',
+        },
+      });
+    } else {
+      console.log(`👤 Admin user ${adminEmail} already exists.`);
+    }
   }
 
   // 2. Read cars.json dataset
@@ -105,6 +112,34 @@ async function main() {
           collection: item.collection || null,
           isDlc: Boolean(item.isDlc),
           isAvailable: Boolean(item.isAvailable),
+          stats: {
+            upsert: {
+              create: {
+                speed: item.speed !== undefined ? item.speed : null,
+                handling: item.handling !== undefined ? item.handling : null,
+                acceleration: item.acceleration !== undefined ? item.acceleration : null,
+                launch: item.launch !== undefined ? item.launch : null,
+                braking: item.braking !== undefined ? item.braking : null,
+                offroad: item.offroad !== undefined ? item.offroad : null,
+                powerHp: item.powerHp !== undefined ? item.powerHp : null,
+                torqueNm: item.torqueNm !== undefined ? item.torqueNm : null,
+                weightKg: item.weightKg !== undefined ? item.weightKg : null,
+                topSpeedKmh: item.topSpeedKmh !== undefined ? item.topSpeedKmh : null,
+              },
+              update: {
+                speed: item.speed !== undefined ? item.speed : null,
+                handling: item.handling !== undefined ? item.handling : null,
+                acceleration: item.acceleration !== undefined ? item.acceleration : null,
+                launch: item.launch !== undefined ? item.launch : null,
+                braking: item.braking !== undefined ? item.braking : null,
+                offroad: item.offroad !== undefined ? item.offroad : null,
+                powerHp: item.powerHp !== undefined ? item.powerHp : null,
+                torqueNm: item.torqueNm !== undefined ? item.torqueNm : null,
+                weightKg: item.weightKg !== undefined ? item.weightKg : null,
+                topSpeedKmh: item.topSpeedKmh !== undefined ? item.topSpeedKmh : null,
+              },
+            },
+          },
         },
       });
       continue;
