@@ -144,6 +144,17 @@ export const apiService = {
     return response.data.data;
   },
 
+  uploadCarImage: async (file: File): Promise<{ imageUrl: string; thumbnailUrl?: string; path: string; originalSize?: number; compressedSize?: number }> => {
+    const formData = new FormData();
+    formData.append('image', file);
+    const response = await apiClient.post('/admin/cars/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data.data;
+  },
+
   getAuditLogs: async (): Promise<AuditLog[]> => {
     const response = await apiClient.get('/admin/audit-logs');
     return response.data.data;

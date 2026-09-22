@@ -13,7 +13,20 @@ import {
   Edit,
   Search,
   X,
+  Upload,
+  Image as ImageIcon,
+  Star,
+  Loader2,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
+interface CarImageFormItem {
+  imageUrl: string;
+  thumbnailUrl?: string;
+  altText?: string;
+  isPrimary?: boolean;
+  sortOrder?: number;
+}
 
 export const AdminDashboard: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -22,6 +35,8 @@ export const AdminDashboard: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState<'cars' | 'audit'>('cars');
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(25);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCar, setEditingCar] = useState<Car | null>(null);
 
@@ -49,10 +64,16 @@ export const AdminDashboard: React.FC = () => {
     topSpeedKmh: 280,
   });
 
+  // Supabase Storage Image management state
+  const [carImages, setCarImages] = useState<CarImageFormItem[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [manualUrlInput, setManualUrlInput] = useState('');
+
   // Queries
-  const { data: carsData } = useQuery({
-    queryKey: ['adminCars', search],
-    queryFn: () => apiService.getCars({ search, limit: 50 }),
+  const { data: carsData, isLoading: isLoadingCars } = useQuery({
+    queryKey: ['adminCars', search, page, pageSize],
+    queryFn: () => apiService.getCars({ search, page, limit: pageSize }),
   });
 
   const { data: brands = [] } = useQuery({
@@ -95,6 +116,9 @@ export const AdminDashboard: React.FC = () => {
 
   const handleOpenCreate = () => {
     setEditingCar(null);
+    setCarImages([]);
+    setUploadError(null);
+    setManualUrlInput('');
     setFormState({
       year: 2024,
       brandId: brands[0]?.id || 1,
@@ -122,6 +146,18 @@ export const AdminDashboard: React.FC = () => {
 
   const handleOpenEdit = (car: Car) => {
     setEditingCar(car);
+    setUploadError(null);
+    setManualUrlInput('');
+    setCarImages(
+      car.images
+        ? car.images.map((img, idx) => ({
+            imageUrl: img.imageUrl,
+            altText: img.altText || '',
+            isPrimary: img.isPrimary ?? idx === 0,
+            sortOrder: img.sortOrder ?? idx,
+          }))
+        : []
+    );
     setFormState({
       year: car.year,
       brandId: car.brandId,
@@ -147,6 +183,65 @@ export const AdminDashboard: React.FC = () => {
     setModalOpen(true);
   };
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setIsUploading(true);
+    setUploadError(null);
+
+    try {
+      const file = files[0];
+      const result = await apiService.uploadCarImage(file);
+      const newImage: CarImageFormItem = {
+        imageUrl: result.imageUrl,
+        thumbnailUrl: result.thumbnailUrl,
+        altText: `${formState.model || 'Car'} Image`,
+        isPrimary: carImages.length === 0,
+        sortOrder: carImages.length,
+      };
+      setCarImages((prev) => [...prev, newImage]);
+
+    } catch (err: any) {
+      console.error('Failed to upload image:', err);
+      setUploadError(err?.response?.data?.message || 'Failed to upload image to Supabase storage bucket.');
+    } finally {
+      setIsUploading(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleAddManualUrl = () => {
+    if (!manualUrlInput || !manualUrlInput.trim()) return;
+    const newImage: CarImageFormItem = {
+      imageUrl: manualUrlInput.trim(),
+      altText: `${formState.model || 'Car'} Image`,
+      isPrimary: carImages.length === 0,
+      sortOrder: carImages.length,
+    };
+    setCarImages((prev) => [...prev, newImage]);
+    setManualUrlInput('');
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setCarImages((prev) => {
+      const updated = prev.filter((_, i) => i !== index);
+      if (updated.length > 0 && !updated.some((img) => img.isPrimary)) {
+        updated[0].isPrimary = true;
+      }
+      return updated;
+    });
+  };
+
+  const handleSetPrimaryImage = (index: number) => {
+    setCarImages((prev) =>
+      prev.map((img, i) => ({
+        ...img,
+        isPrimary: i === index,
+      }))
+    );
+  };
+
   const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
     const fullName = formState.fullName || `${formState.year} ${brands.find(b=>b.id===formState.brandId)?.name || ''} ${formState.model}`;
@@ -162,6 +257,7 @@ export const AdminDashboard: React.FC = () => {
       carType: formState.carType,
       country: formState.country,
       isDlc: formState.isDlc,
+      images: carImages,
       stats: {
         speed: Number(formState.speed),
         handling: Number(formState.handling),
@@ -234,16 +330,38 @@ export const AdminDashboard: React.FC = () => {
       {/* Tab: Cars Datatable */}
       {activeTab === 'cars' && (
         <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <div className="relative w-72">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div className="relative w-full sm:w-72">
               <input
                 type="text"
                 placeholder="Filter admin cars table..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setPage(1);
+                }}
                 className="w-full bg-surface text-foreground placeholder:text-text-muted text-xs rounded-xl pl-9 pr-3 py-2 border border-border focus:outline-none focus:border-primary transition-colors"
               />
               <Search className="w-4 h-4 text-text-muted absolute left-3 top-2.5" />
+            </div>
+
+            <div className="flex items-center space-x-3 text-xs text-text-muted">
+              <span>Show per page:</span>
+              <select
+                value={pageSize}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                  setPage(1);
+                }}
+                className="bg-surface text-foreground font-semibold rounded-lg px-2.5 py-1.5 border border-border focus:outline-none focus:border-primary"
+              >
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+                <option value={250}>250</option>
+                <option value={500}>500</option>
+                <option value={1000}>1000 (All)</option>
+              </select>
             </div>
           </div>
 
@@ -261,41 +379,99 @@ export const AdminDashboard: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {carsData?.data.map((car) => (
-                  <tr key={car.id} className="hover:bg-elevated transition-colors">
-                    <td className="p-3.5 font-mono text-text-muted">#{car.id}</td>
-                    <td className="p-3.5 font-bold text-foreground">{car.fullName}</td>
-                    <td className="p-3.5 text-text-secondary">{car.brand?.name}</td>
-                    <td className="p-3.5">
-                      <ClassBadge className={car.class} pi={car.basePi} size="sm" />
-                    </td>
-                    <td className="p-3.5 font-mono font-bold text-text-secondary">{car.drivetrain}</td>
-                    <td className="p-3.5 text-text-muted">{car.year}</td>
-                    <td className="p-3.5 text-right space-x-2">
-                      <button
-                        onClick={() => handleOpenEdit(car)}
-                        className="p-1.5 text-text-secondary hover:text-foreground bg-muted hover:bg-border rounded-lg transition-colors"
-                        title="Edit car"
-                      >
-                        <Edit className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (confirm(`Are you sure you want to delete ${car.fullName}?`)) {
-                            deleteMutation.mutate(car.id);
-                          }
-                        }}
-                        className="p-1.5 text-danger hover:text-danger/80 bg-danger/10 hover:bg-danger/20 rounded-lg border border-danger/30 transition-colors"
-                        title="Delete car"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                {isLoadingCars ? (
+                  <tr>
+                    <td colSpan={7} className="p-8 text-center text-text-muted">
+                      <div className="flex justify-center items-center space-x-2">
+                        <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                        <span>Loading cars catalog...</span>
+                      </div>
                     </td>
                   </tr>
-                ))}
+                ) : carsData?.data && carsData.data.length > 0 ? (
+                  carsData.data.map((car) => (
+                    <tr key={car.id} className="hover:bg-elevated transition-colors">
+                      <td className="p-3.5 font-mono text-text-muted">#{car.id}</td>
+                      <td className="p-3.5 font-bold text-foreground">{car.fullName}</td>
+                      <td className="p-3.5 text-text-secondary">{car.brand?.name}</td>
+                      <td className="p-3.5">
+                        <ClassBadge className={car.class} pi={car.basePi} size="sm" />
+                      </td>
+                      <td className="p-3.5 font-mono font-bold text-text-secondary">{car.drivetrain}</td>
+                      <td className="p-3.5 text-text-muted">{car.year}</td>
+                      <td className="p-3.5 text-right space-x-2">
+                        <button
+                          onClick={() => handleOpenEdit(car)}
+                          className="p-1.5 text-text-secondary hover:text-foreground bg-muted hover:bg-border rounded-lg transition-colors"
+                          title="Edit car"
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (confirm(`Are you sure you want to delete ${car.fullName}?`)) {
+                              deleteMutation.mutate(car.id);
+                            }
+                          }}
+                          className="p-1.5 text-danger hover:text-danger/80 bg-danger/10 hover:bg-danger/20 rounded-lg border border-danger/30 transition-colors"
+                          title="Delete car"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={7} className="p-8 text-center text-text-muted">
+                      No cars found matching your criteria.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
+
+          {/* Bottom Pagination Controls Bar */}
+          {carsData && carsData.pagination && (
+            <div className="flex flex-col sm:flex-row justify-between items-center bg-card border border-border rounded-2xl px-5 py-3 gap-3 text-xs shadow-sm">
+              <div className="text-text-muted font-medium">
+                Showing{' '}
+                <strong className="text-foreground">
+                  {carsData.pagination.total > 0 ? (page - 1) * pageSize + 1 : 0}
+                </strong>{' '}
+                to{' '}
+                <strong className="text-foreground">
+                  {Math.min(page * pageSize, carsData.pagination.total)}
+                </strong>{' '}
+                of <strong className="text-foreground">{carsData.pagination.total}</strong> cars
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page <= 1}
+                  className="px-3 py-1.5 bg-surface hover:bg-elevated border border-border rounded-xl font-semibold flex items-center space-x-1 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>Previous</span>
+                </button>
+
+                <span className="px-3 py-1.5 bg-muted rounded-xl text-text-secondary font-mono font-bold">
+                  Page {page} of {carsData.pagination.totalPages || 1}
+                </span>
+
+                <button
+                  onClick={() => setPage((p) => Math.min(carsData.pagination.totalPages || 1, p + 1))}
+                  disabled={page >= (carsData.pagination.totalPages || 1)}
+                  className="px-3 py-1.5 bg-surface hover:bg-elevated border border-border rounded-xl font-semibold flex items-center space-x-1 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <span>Next</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -464,6 +640,131 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
+              {/* Supabase Storage Image Gallery */}
+              <div className="pt-3 border-t border-border space-y-3">
+                <div className="flex justify-between items-center">
+                  <label className="text-primary font-extrabold uppercase tracking-wider block">
+                    Car Images (Supabase Storage Bucket)
+                  </label>
+                  <span className="text-[11px] text-text-muted">
+                    {carImages.length} image(s) attached
+                  </span>
+                </div>
+
+                {uploadError && (
+                  <div className="bg-danger/10 border border-danger/30 text-danger p-2.5 rounded-xl text-xs">
+                    {uploadError}
+                  </div>
+                )}
+
+                {/* Upload & Add Controls */}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <label className="flex-1 cursor-pointer bg-surface hover:bg-elevated border border-dashed border-border hover:border-primary px-3 py-2.5 rounded-xl flex items-center justify-center space-x-2 transition-colors text-xs text-text-secondary hover:text-foreground">
+                    {isUploading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 text-primary animate-spin" />
+                        <span>Uploading to Supabase...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-4 h-4 text-primary" />
+                        <span>Upload Image File to Supabase</span>
+                      </>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      disabled={isUploading}
+                      className="hidden"
+                    />
+                  </label>
+
+                  <div className="flex gap-2">
+                    <input
+                      type="url"
+                      placeholder="Or paste image URL..."
+                      value={manualUrlInput}
+                      onChange={(e) => setManualUrlInput(e.target.value)}
+                      className="bg-surface text-foreground placeholder:text-text-muted text-xs rounded-xl px-3 py-2 border border-border focus:outline-none focus:border-primary"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddManualUrl}
+                      className="bg-muted hover:bg-border text-foreground text-xs px-3 py-2 rounded-xl font-bold transition-colors"
+                    >
+                      Add URL
+                    </button>
+                  </div>
+                </div>
+
+                {/* Image List Preview */}
+                {carImages.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+                    {carImages.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className={`relative p-2 rounded-xl border flex items-center space-x-3 transition-colors ${
+                          img.isPrimary
+                            ? 'bg-primary/10 border-primary/40'
+                            : 'bg-surface border-border'
+                        }`}
+                      >
+                        <img
+                          src={img.imageUrl}
+                          alt={img.altText || 'Car'}
+                          className="w-14 h-10 object-cover rounded-lg bg-muted"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.opacity = '0.3';
+                          }}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <input
+                            type="text"
+                            placeholder="Alt text..."
+                            value={img.altText || ''}
+                            onChange={(e) => {
+                              const newAlt = e.target.value;
+                              setCarImages((prev) =>
+                                prev.map((item, i) => (i === idx ? { ...item, altText: newAlt } : item))
+                              );
+                            }}
+                            className="w-full bg-transparent text-xs text-foreground placeholder:text-text-muted border-b border-transparent hover:border-border focus:border-primary focus:outline-none py-0.5"
+                          />
+                          <div className="text-[10px] text-text-muted truncate mt-0.5" title={img.imageUrl}>
+                            {img.imageUrl}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center space-x-1">
+                          <button
+                            type="button"
+                            onClick={() => handleSetPrimaryImage(idx)}
+                            className={`p-1.5 rounded-lg transition-colors ${
+                              img.isPrimary
+                                ? 'text-amber-400 bg-amber-400/20'
+                                : 'text-text-muted hover:text-amber-400 hover:bg-surface'
+                            }`}
+                            title={img.isPrimary ? 'Primary image' : 'Set as primary image'}
+                          >
+                            <Star className="w-3.5 h-3.5 fill-current" />
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveImage(idx)}
+                            className="p-1.5 text-danger hover:bg-danger/20 rounded-lg transition-colors"
+                            title="Remove image"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <div className="pt-4 flex justify-end space-x-3">
                 <button
                   type="button"
@@ -474,7 +775,7 @@ export const AdminDashboard: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  disabled={saveMutation.isPending}
+                  disabled={saveMutation.isPending || isUploading}
                   className="px-5 py-2 bg-primary hover:bg-primary-hover text-primary-foreground rounded-xl font-bold shadow"
                 >
                   {saveMutation.isPending ? 'Saving...' : 'Save Car'}

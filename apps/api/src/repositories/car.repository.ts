@@ -160,6 +160,22 @@ export class CarRepository {
         });
       }
 
+      if (images && Array.isArray(images)) {
+        await tx.carImage.deleteMany({ where: { carId: id } });
+        if (images.length > 0) {
+          await tx.carImage.createMany({
+            data: images.map((img: any, idx: number) => ({
+              carId: id,
+              imageUrl: img.imageUrl,
+              thumbnailUrl: img.thumbnailUrl || img.imageUrl,
+              altText: img.altText || null,
+              isPrimary: img.isPrimary !== undefined ? img.isPrimary : idx === 0,
+              sortOrder: img.sortOrder !== undefined ? img.sortOrder : idx,
+            })),
+          });
+        }
+      }
+
       return tx.car.update({
         where: { id },
         data: carData,
@@ -167,7 +183,7 @@ export class CarRepository {
           brand: true,
           stats: true,
           engine: true,
-          images: true,
+          images: { orderBy: { sortOrder: 'asc' } },
           sources: true,
         },
       });

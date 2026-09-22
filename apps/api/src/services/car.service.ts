@@ -1,4 +1,5 @@
 import { CarRepository } from '../repositories/car.repository';
+import { StorageService } from './storage.service';
 import { CarQueryParams } from '@fh6-cars/shared';
 import { AppError } from '../middleware/error-handler';
 import { AdminRepository } from '../repositories/admin.repository';
@@ -6,6 +7,7 @@ import { AdminRepository } from '../repositories/admin.repository';
 export class CarService {
   private carRepo = new CarRepository();
   private adminRepo = new AdminRepository();
+  private storageService = new StorageService();
 
   async getCars(params: CarQueryParams) {
     return this.carRepo.findMany(params);
@@ -51,7 +53,18 @@ export class CarService {
   }
 
   async updateCar(id: number, data: any, adminUserId?: number) {
-    await this.getCarById(id);
+    const existing = await this.getCarById(id);
+
+    // Automatically delete removed images from Supabase storage bucket
+    if (data.images && Array.isArray(data.images) && existing.images) {
+      const newUrls = new Set(data.images.map((img: any) => img.imageUrl));
+      const removedImages = existing.images.filter((img) => !newUrls.has(img.imageUrl));
+
+      for (const img of removedImages) {
+        await this.storageService.deleteImage(img.imageUrl).catch(() => {});
+      }
+    }
+
     const updated = await this.carRepo.update(id, data);
 
     if (adminUserId) {
@@ -69,6 +82,14 @@ export class CarService {
 
   async deleteCar(id: number, adminUserId?: number) {
     const existing = await this.getCarById(id);
+
+    // Automatically delete all associated images from Supabase storage bucket
+    if (existing.images && existing.images.length > 0) {
+      for (const img of existing.images) {
+        await this.storageService.deleteImage(img.imageUrl).catch(() => {});
+      }
+    }
+
     await this.carRepo.delete(id);
 
     if (adminUserId) {
