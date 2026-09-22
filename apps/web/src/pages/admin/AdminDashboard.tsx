@@ -19,6 +19,9 @@ import {
   Loader2,
   ChevronLeft,
   ChevronRight,
+  ArrowUp,
+  ArrowDown,
+  ArrowUpDown,
 } from 'lucide-react';
 interface CarImageFormItem {
   imageUrl: string;
@@ -37,6 +40,8 @@ export const AdminDashboard: React.FC = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
+  const [sortField, setSortField] = useState<string>('fullName');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCar, setEditingCar] = useState<Car | null>(null);
 
@@ -70,10 +75,38 @@ export const AdminDashboard: React.FC = () => {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [manualUrlInput, setManualUrlInput] = useState('');
 
+  const handleSort = (field: string) => {
+    if (sortField === field) {
+      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortField(field);
+      setSortOrder('asc');
+    }
+    setPage(1);
+  };
+
+  const renderSortIcon = (field: string) => {
+    if (sortField !== field) {
+      return <ArrowUpDown className="w-3 h-3 text-text-muted opacity-50 group-hover:opacity-100 transition-opacity" />;
+    }
+    return sortOrder === 'asc' ? (
+      <ArrowUp className="w-3 h-3 text-primary" />
+    ) : (
+      <ArrowDown className="w-3 h-3 text-primary" />
+    );
+  };
+
   // Queries
   const { data: carsData, isLoading: isLoadingCars } = useQuery({
-    queryKey: ['adminCars', search, page, pageSize],
-    queryFn: () => apiService.getCars({ search, page, limit: pageSize }),
+    queryKey: ['adminCars', search, page, pageSize, sortField, sortOrder],
+    queryFn: () =>
+      apiService.getCars({
+        search,
+        page,
+        limit: pageSize,
+        sort: sortField,
+        order: sortOrder,
+      }),
   });
 
   const { data: brands = [] } = useQuery({
@@ -368,16 +401,65 @@ export const AdminDashboard: React.FC = () => {
           <div className="overflow-x-auto bg-card border border-border rounded-2xl shadow-sm">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-surface border-b border-border text-text-muted uppercase font-extrabold">
-                  <th className="p-3.5">ID</th>
-                  <th className="p-3.5">Car Model</th>
-                  <th className="p-3.5">Brand</th>
-                  <th className="p-3.5">Class / PI</th>
-                  <th className="p-3.5">Drivetrain</th>
-                  <th className="p-3.5">Year</th>
+                <tr className="bg-surface border-b border-border text-text-muted uppercase font-extrabold select-none">
+                  <th
+                    onClick={() => handleSort('id')}
+                    className="p-3.5 cursor-pointer hover:text-foreground transition-colors group"
+                  >
+                    <div className="flex items-center space-x-1.5">
+                      <span>ID</span>
+                      {renderSortIcon('id')}
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => handleSort('fullName')}
+                    className="p-3.5 cursor-pointer hover:text-foreground transition-colors group"
+                  >
+                    <div className="flex items-center space-x-1.5">
+                      <span>Car Model</span>
+                      {renderSortIcon('fullName')}
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => handleSort('brand')}
+                    className="p-3.5 cursor-pointer hover:text-foreground transition-colors group"
+                  >
+                    <div className="flex items-center space-x-1.5">
+                      <span>Brand</span>
+                      {renderSortIcon('brand')}
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => handleSort('class')}
+                    className="p-3.5 cursor-pointer hover:text-foreground transition-colors group"
+                  >
+                    <div className="flex items-center space-x-1.5">
+                      <span>Class / PI</span>
+                      {renderSortIcon('class')}
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => handleSort('drivetrain')}
+                    className="p-3.5 cursor-pointer hover:text-foreground transition-colors group"
+                  >
+                    <div className="flex items-center space-x-1.5">
+                      <span>Drivetrain</span>
+                      {renderSortIcon('drivetrain')}
+                    </div>
+                  </th>
+                  <th
+                    onClick={() => handleSort('year')}
+                    className="p-3.5 cursor-pointer hover:text-foreground transition-colors group"
+                  >
+                    <div className="flex items-center space-x-1.5">
+                      <span>Year</span>
+                      {renderSortIcon('year')}
+                    </div>
+                  </th>
                   <th className="p-3.5 text-right">Actions</th>
                 </tr>
               </thead>
+
               <tbody className="divide-y divide-border">
                 {isLoadingCars ? (
                   <tr>

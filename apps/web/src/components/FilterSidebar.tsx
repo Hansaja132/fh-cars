@@ -69,19 +69,34 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           >
             All
           </button>
-          {CLASSES.map((c) => (
-            <button
-              key={c}
-              onClick={() => onClassChange(selectedClass === c ? '' : c)}
-              className={`px-2 py-1 text-xs font-bold rounded border transition-colors ${
-                selectedClass === c
-                  ? 'bg-primary text-primary-foreground border-primary shadow-sm'
-                  : 'bg-muted text-text-secondary border-border hover:text-foreground'
-              }`}
-            >
-              {c}
-            </button>
-          ))}
+          {CLASSES.map((c) => {
+            const isSelected = selectedClass === c;
+            const classBgMap: Record<string, string> = {
+              D: 'bg-[#06B6D4] text-white border-[#0891B2]',
+              C: 'bg-[#EAB308] text-white border-[#CA8A04]',
+              B: 'bg-[#F97316] text-white border-[#EA580C]',
+              A: 'bg-[#EF4444] text-white border-[#DC2626]',
+              S1: 'bg-[#A855F7] text-white border-[#9333EA]',
+              S2: 'bg-[#2563EB] text-white border-[#1D4ED8]',
+              R: 'bg-[#D946EF] text-white border-[#C026D3]',
+              X: 'bg-[#22C55E] text-white border-[#16A34A]',
+            };
+            const activeStyle = classBgMap[c] || 'bg-primary text-primary-foreground border-primary';
+
+            return (
+              <button
+                key={c}
+                onClick={() => onClassChange(isSelected ? '' : c)}
+                className={`px-2 py-1 text-xs font-black rounded border transition-all ${
+                  isSelected
+                    ? `${activeStyle} shadow-md scale-105`
+                    : 'bg-muted text-text-secondary border-border hover:text-foreground'
+                }`}
+              >
+                {c}
+              </button>
+            );
+          })}
         </div>
       </div>
 
