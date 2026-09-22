@@ -44,13 +44,14 @@
     --muted-foreground-rgb: 82 98 115;
 
     /* FH6 Class colors */
-    --class-d: #94A3B8;
-    --class-c: #22C55E;
-    --class-b: #3B82F6;
-    --class-a: #8B5CF6;
-    --class-s1: #F97316;
-    --class-s2: #EF4444;
-    --class-x: #EAB308;
+    --class-d: #06B6D4;
+    --class-c: #EAB308;
+    --class-b: #F97316;
+    --class-a: #EF4444;
+    --class-s1: #A855F7;
+    --class-s2: #2563EB;
+    --class-r: #D946EF;
+    --class-x: #22C55E;
   }
 
   .dark {

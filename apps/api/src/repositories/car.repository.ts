@@ -13,10 +13,11 @@ export class CarRepository {
     if (params.search) {
       const q = params.search.trim();
       where.OR = [
-        { model: { contains: q } },
-        { fullName: { contains: q } },
-        { country: { contains: q } },
-        { brand: { name: { contains: q } } },
+        { model: { contains: q, mode: 'insensitive' } },
+        { fullName: { contains: q, mode: 'insensitive' } },
+        { country: { contains: q, mode: 'insensitive' } },
+        { carType: { contains: q, mode: 'insensitive' } },
+        { brand: { name: { contains: q, mode: 'insensitive' } } },
       ];
     }
 
@@ -24,13 +25,13 @@ export class CarRepository {
       where.brand = {
         OR: [
           { slug: { equals: params.brand.toLowerCase() } },
-          { name: { contains: params.brand } },
+          { name: { contains: params.brand, mode: 'insensitive' } },
         ],
       };
     }
 
     if (params.class) {
-      where.class = { equals: params.class.toUpperCase() };
+      where.class = { equals: params.class.toUpperCase(), mode: 'insensitive' };
     }
 
     if (params.year) {
@@ -38,11 +39,11 @@ export class CarRepository {
     }
 
     if (params.drivetrain) {
-      where.drivetrain = { equals: params.drivetrain.toUpperCase() };
+      where.drivetrain = { equals: params.drivetrain.toUpperCase(), mode: 'insensitive' };
     }
 
     if (params.carType) {
-      where.carType = { contains: params.carType };
+      where.carType = { contains: params.carType, mode: 'insensitive' };
     }
 
     if (params.minPi !== undefined || params.maxPi !== undefined) {
@@ -57,12 +58,17 @@ export class CarRepository {
 
     let orderBy: Prisma.CarOrderByWithRelationInput = { fullName: 'asc' };
     const sortField = params.sort || 'fullName';
-    const orderDirection = params.order === 'desc' ? 'desc' : 'asc';
+    const orderDirection: Prisma.SortOrder = params.order === 'desc' ? 'desc' : 'asc';
 
-    if (sortField === 'year') orderBy = { year: orderDirection };
+    if (sortField === 'id') orderBy = { id: orderDirection };
+    else if (sortField === 'year') orderBy = { year: orderDirection };
     else if (sortField === 'basePi' || sortField === 'pi') orderBy = { basePi: orderDirection };
     else if (sortField === 'model') orderBy = { model: orderDirection };
+    else if (sortField === 'fullName') orderBy = { fullName: orderDirection };
+    else if (sortField === 'brand' || sortField === 'brand.name') orderBy = { brand: { name: orderDirection } };
     else if (sortField === 'class') orderBy = { class: orderDirection };
+    else if (sortField === 'drivetrain') orderBy = { drivetrain: orderDirection };
+    else if (sortField === 'country') orderBy = { country: orderDirection };
     else if (sortField === 'createdAt') orderBy = { createdAt: orderDirection };
 
     const [data, total] = await Promise.all([
