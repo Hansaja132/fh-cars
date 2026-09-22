@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Car } from '@fh6-cars/shared';
 import { ClassBadge } from './ClassBadge';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Car as CarIcon } from 'lucide-react';
 
 interface CarCardProps {
   car: Car;
 }
 
 export const CarCard: React.FC<CarCardProps> = ({ car }) => {
+  const [imageFailed, setImageFailed] = useState(false);
+
   const primaryImage =
     car.images?.find((img) => img.isPrimary)?.imageUrl ||
     car.images?.[0]?.imageUrl ||
-    'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80';
+    null;
 
   const brandName = car.brand?.name || 'Manufacturer';
 
@@ -29,15 +31,27 @@ export const CarCard: React.FC<CarCardProps> = ({ car }) => {
         </div>
       )}
 
-      {/* Image Container */}
-      <div className="relative h-48 w-full overflow-hidden bg-muted">
-        <img
-          src={primaryImage}
-          alt={car.fullName}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-90" />
+      {/* Image Container / Placeholder Text Box */}
+      <div className="relative h-48 w-full overflow-hidden bg-surface flex items-center justify-center border-b border-border">
+        {primaryImage && !imageFailed ? (
+          <img
+            src={primaryImage}
+            alt={car.fullName}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-card via-surface to-muted flex flex-col items-center justify-center p-4 text-center space-y-1.5 select-none">
+            <CarIcon className="w-10 h-10 text-primary/40 group-hover:text-primary/70 transition-colors" />
+            <span className="font-display font-extrabold text-xs uppercase tracking-wider text-text-muted group-hover:text-foreground transition-colors line-clamp-1">
+              {car.fullName || `${car.year} ${brandName} ${car.model}`}
+            </span>
+            <span className="text-[10px] font-mono text-text-muted/60 bg-card/60 px-2 py-0.5 rounded border border-border">
+              NO IMAGE ATTACHED
+            </span>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-90 pointer-events-none" />
       </div>
 
       {/* Card Info Content */}

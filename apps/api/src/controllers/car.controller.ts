@@ -1,9 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { CarService } from '../services/car.service';
+import { StorageService } from '../services/storage.service';
 import { AuthenticatedRequest } from '../middleware/auth.middleware';
+import { AppError } from '../middleware/error-handler';
 
 export class CarController {
   private carService = new CarService();
+  private storageService = new StorageService();
 
   public getCars = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -72,4 +75,26 @@ export class CarController {
       next(error);
     }
   };
+
+  public uploadImage = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+      if (!req.file) {
+        throw new AppError('No image file uploaded', 400, 'NO_FILE_UPLOADED');
+      }
+      const result = await this.storageService.uploadImage(req.file);
+      return res.status(200).json({
+        data: {
+          imageUrl: result.url,
+          thumbnailUrl: result.thumbnailUrl,
+          originalSize: result.originalSize,
+          compressedSize: result.compressedSize,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+
 }
+

@@ -73,7 +73,8 @@ export const carUpdateSchema = carCreateSchema.partial();
 
 export const carQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
-  limit: z.coerce.number().int().min(1).max(100).default(25),
+  limit: z.coerce.number().int().min(1).max(1000).default(25),
+
   search: z.string().optional(),
   brand: z.string().optional(),
   class: z.string().optional(),

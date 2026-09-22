@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { apiService } from '../services/api';
 import { ClassBadge } from '../components/ClassBadge';
 import { StatGauge } from '../components/StatGauge';
-import { ArrowLeft, ShieldCheck, Gauge, Sparkles, ExternalLink, Cpu } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Gauge, Sparkles, ExternalLink, Cpu, Car as CarIcon } from 'lucide-react';
 
 export const CarDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const carId = parseInt(id || '0', 10);
+  const [imageFailed, setImageFailed] = useState(false);
 
   const { data: car, isLoading, isError } = useQuery({
     queryKey: ['car', carId],
@@ -40,7 +41,7 @@ export const CarDetailPage: React.FC = () => {
   const primaryImage =
     car.images?.find((img) => img.isPrimary)?.imageUrl ||
     car.images?.[0]?.imageUrl ||
-    'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80';
+    null;
 
   const brandName = car.brand?.name || 'Manufacturer';
 
@@ -58,14 +59,28 @@ export const CarDetailPage: React.FC = () => {
       {/* Main Header Banner */}
       <div className="relative rounded-3xl overflow-hidden border border-border bg-card shadow-lg">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-          {/* Left Column: Car Image */}
-          <div className="lg:col-span-7 relative h-72 lg:h-auto min-h-[320px] bg-muted">
-            <img
-              src={primaryImage}
-              alt={car.fullName}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-card/90 via-transparent to-transparent" />
+          {/* Left Column: Car Image / Placeholder Box */}
+          <div className="lg:col-span-7 relative h-72 lg:h-auto min-h-[320px] bg-surface flex items-center justify-center border-b lg:border-b-0 lg:border-r border-border">
+            {primaryImage && !imageFailed ? (
+              <img
+                src={primaryImage}
+                alt={car.fullName}
+                className="w-full h-full object-cover"
+                onError={() => setImageFailed(true)}
+              />
+            ) : (
+              <div className="w-full h-full min-h-[320px] bg-gradient-to-br from-card via-surface to-muted flex flex-col items-center justify-center p-8 text-center space-y-2 select-none">
+                <CarIcon className="w-16 h-16 text-primary/40" />
+                <span className="font-display font-extrabold text-lg uppercase tracking-wider text-foreground">
+                  {car.fullName}
+                </span>
+                <span className="text-xs font-mono text-text-muted bg-card px-3 py-1 rounded-lg border border-border">
+                  NO IMAGE ATTACHED
+                </span>
+              </div>
+            )}
+
+            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-card/90 via-transparent to-transparent pointer-events-none" />
             {car.isDlc && (
               <div className="absolute top-4 left-4 bg-amber-500 text-slate-950 text-xs font-black uppercase px-3 py-1 rounded shadow flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5" />
