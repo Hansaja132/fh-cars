@@ -10,7 +10,15 @@ const authController = new AuthController();
 router.post('/login', validateRequest(loginSchema, 'body'), authController.login);
 router.post('/logout', authController.logout);
 router.get('/me', authenticateJwt, authController.me);
-router.post('/forgot-password', validateRequest(forgotPasswordSchema, 'body'), authController.forgotPassword);
-router.post('/reset-password', validateRequest(resetPasswordSchema, 'body'), authController.resetPassword);
+router.post(
+  '/forgot-password',
+  validateRequest(forgotPasswordSchema, 'body'),
+  authController.forgotPassword
+);
+router.post(
+  '/reset-password',
+  validateRequest(resetPasswordSchema, 'body'),
+  authController.resetPassword
+);
 
 export default router;

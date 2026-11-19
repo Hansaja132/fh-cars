@@ -47,7 +47,10 @@ export const AdminImportPage: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 transition-colors">
-      <Link to="/admin" className="inline-flex items-center space-x-2 text-xs font-semibold text-text-muted hover:text-foreground transition-colors">
+      <Link
+        to="/admin"
+        className="inline-flex items-center space-x-2 text-xs font-semibold text-text-muted hover:text-foreground transition-colors"
+      >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Admin Dashboard</span>
       </Link>
@@ -58,7 +61,9 @@ export const AdminImportPage: React.FC = () => {
             <FileSpreadsheet className="w-4 h-4" />
             <span>Batch Data Ingestion</span>
           </div>
-          <h1 className="font-display font-extrabold text-3xl text-foreground">Import Cars (JSON / CSV)</h1>
+          <h1 className="font-display font-extrabold text-3xl text-foreground">
+            Import Cars (JSON / CSV)
+          </h1>
           <p className="text-xs text-text-muted">
             Upload or paste formatted car data. Records will be validated before insertion.
           </p>
@@ -69,7 +74,9 @@ export const AdminImportPage: React.FC = () => {
           <UploadCloud className="w-10 h-10 text-text-muted mx-auto" />
           <div className="space-y-1">
             <div className="text-sm font-bold text-foreground">Choose cars.json or cars.csv</div>
-            <div className="text-xs text-text-muted">Supports array of JSON objects or CSV with headers</div>
+            <div className="text-xs text-text-muted">
+              Supports array of JSON objects or CSV with headers
+            </div>
           </div>
           <input
             type="file"
@@ -84,7 +91,9 @@ export const AdminImportPage: React.FC = () => {
           >
             Select File
           </label>
-          {fileName && <div className="text-xs font-mono text-primary font-bold">Selected: {fileName}</div>}
+          {fileName && (
+            <div className="text-xs font-mono text-primary font-bold">Selected: {fileName}</div>
+          )}
         </div>
 
         {/* Format Selector & Textarea Fallback */}
@@ -96,7 +105,9 @@ export const AdminImportPage: React.FC = () => {
                 type="button"
                 onClick={() => setFileType('json')}
                 className={`px-2 py-0.5 rounded font-mono text-xs transition-colors ${
-                  fileType === 'json' ? 'bg-primary text-primary-foreground font-bold' : 'bg-muted text-text-muted hover:text-foreground'
+                  fileType === 'json'
+                    ? 'bg-primary text-primary-foreground font-bold'
+                    : 'bg-muted text-text-muted hover:text-foreground'
                 }`}
               >
                 JSON
@@ -105,7 +116,9 @@ export const AdminImportPage: React.FC = () => {
                 type="button"
                 onClick={() => setFileType('csv')}
                 className={`px-2 py-0.5 rounded font-mono text-xs transition-colors ${
-                  fileType === 'csv' ? 'bg-primary text-primary-foreground font-bold' : 'bg-muted text-text-muted hover:text-foreground'
+                  fileType === 'csv'
+                    ? 'bg-primary text-primary-foreground font-bold'
+                    : 'bg-muted text-text-muted hover:text-foreground'
                 }`}
               >
                 CSV
@@ -164,7 +177,9 @@ export const AdminImportPage: React.FC = () => {
 
             {summary.details && summary.details.length > 0 && (
               <div className="space-y-1">
-                <div className="text-xs font-bold text-text-secondary">Detailed Execution Logs:</div>
+                <div className="text-xs font-bold text-text-secondary">
+                  Detailed Execution Logs:
+                </div>
                 <div className="bg-card p-3 rounded-xl text-[11px] font-mono text-text-secondary max-h-48 overflow-y-auto space-y-1 border border-border">
                   {summary.details.map((line, idx) => (
                     <div key={idx}>{line}</div>

@@ -81,7 +81,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               R: 'bg-[#D946EF] text-white border-[#C026D3]',
               X: 'bg-[#22C55E] text-white border-[#16A34A]',
             };
-            const activeStyle = classBgMap[c] || 'bg-primary text-primary-foreground border-primary';
+            const activeStyle =
+              classBgMap[c] || 'bg-primary text-primary-foreground border-primary';
 
             return (
               <button

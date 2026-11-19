@@ -94,7 +94,4 @@ export class CarController {
       next(error);
     }
   };
-
-
 }
-

@@ -12,9 +12,7 @@ export const CarCard: React.FC<CarCardProps> = ({ car }) => {
   const [imageFailed, setImageFailed] = useState(false);
 
   const primaryImage =
-    car.images?.find((img) => img.isPrimary)?.imageUrl ||
-    car.images?.[0]?.imageUrl ||
-    null;
+    car.images?.find((img) => img.isPrimary)?.imageUrl || car.images?.[0]?.imageUrl || null;
 
   const brandName = car.brand?.name || 'Manufacturer';
 

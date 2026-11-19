@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Home, Search, Compass, ShieldAlert, ArrowRight, Layers, Sparkles, Navigation } from 'lucide-react';
+import {
+  Home,
+  Search,
+  Compass,
+  ShieldAlert,
+  ArrowRight,
+  Layers,
+  Sparkles,
+  Navigation,
+} from 'lucide-react';
 import { ClassBadge } from '../components/ClassBadge';
 
 export const NotFoundPage: React.FC = () => {
@@ -44,7 +53,10 @@ export const NotFoundPage: React.FC = () => {
               <div className="inline-block bg-surface border border-border px-4 py-1 rounded-full shadow-xs">
                 <span className="text-xs font-mono font-bold text-text-secondary uppercase tracking-widest flex items-center space-x-2">
                   <span className="w-2 h-2 rounded-full bg-danger animate-pulse" />
-                  <span>PI Rating: <strong className="text-primary font-extrabold">404</strong> (Out of Bounds)</span>
+                  <span>
+                    PI Rating: <strong className="text-primary font-extrabold">404</strong> (Out of
+                    Bounds)
+                  </span>
                 </span>
               </div>
             </div>
@@ -55,7 +67,8 @@ export const NotFoundPage: React.FC = () => {
                 Looks like you've driven off the map!
               </h1>
               <p className="text-text-secondary text-xs sm:text-sm leading-relaxed">
-                The route or car page you are searching for is unavailable or has been relocated in the FH6 database.
+                The route or car page you are searching for is unavailable or has been relocated in
+                the FH6 database.
               </p>
             </div>
 
@@ -119,13 +132,19 @@ export const NotFoundPage: React.FC = () => {
             <Sparkles className="w-3.5 h-3.5 text-primary" />
             <span>Popular Categories:</span>
           </span>
-          
-          <Link to="/cars?class=S2" className="inline-flex items-center space-x-1 hover:opacity-80 transition-opacity">
+
+          <Link
+            to="/cars?class=S2"
+            className="inline-flex items-center space-x-1 hover:opacity-80 transition-opacity"
+          >
             <ClassBadge className="S2" size="sm" />
             <span className="text-text-secondary font-semibold">Hypercars</span>
           </Link>
 
-          <Link to="/cars?class=S1" className="inline-flex items-center space-x-1 hover:opacity-80 transition-opacity">
+          <Link
+            to="/cars?class=S1"
+            className="inline-flex items-center space-x-1 hover:opacity-80 transition-opacity"
+          >
             <ClassBadge className="S1" size="sm" />
             <span className="text-text-secondary font-semibold">Supercars</span>
           </Link>

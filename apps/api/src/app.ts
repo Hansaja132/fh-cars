@@ -32,7 +32,11 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.text({ type: ['text/csv', 'text/plain'], limit: '10mb' }));
 
 // Swagger UI Documentation
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { customSiteTitle: 'FH6 Cars API Docs' }));
+app.use(
+  '/api/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, { customSiteTitle: 'FH6 Cars API Docs' })
+);
 
 // Rate Limiting on public API
 app.use('/api/v1', publicRateLimiter);

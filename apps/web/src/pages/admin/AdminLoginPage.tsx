@@ -98,7 +98,8 @@ export const AdminLoginPage: React.FC = () => {
           </h1>
           <p className="text-xs text-text-muted">
             {mode === 'login' && 'Authenticate to manage cars, brands, and imports'}
-            {mode === 'forgot_request' && 'Enter your admin email to receive a 6-digit verification code'}
+            {mode === 'forgot_request' &&
+              'Enter your admin email to receive a 6-digit verification code'}
             {mode === 'forgot_verify' && `Enter the 6-digit code sent to ${targetEmail}`}
           </p>
         </div>
@@ -135,7 +136,9 @@ export const AdminLoginPage: React.FC = () => {
                 <Mail className="w-4 h-4 text-text-muted absolute left-3 top-3" />
               </div>
               {loginForm.formState.errors.email && (
-                <p className="text-[11px] text-danger">{loginForm.formState.errors.email.message}</p>
+                <p className="text-[11px] text-danger">
+                  {loginForm.formState.errors.email.message}
+                </p>
               )}
             </div>
 
@@ -166,7 +169,9 @@ export const AdminLoginPage: React.FC = () => {
                 <KeyRound className="w-4 h-4 text-text-muted absolute left-3 top-3" />
               </div>
               {loginForm.formState.errors.password && (
-                <p className="text-[11px] text-danger">{loginForm.formState.errors.password.message}</p>
+                <p className="text-[11px] text-danger">
+                  {loginForm.formState.errors.password.message}
+                </p>
               )}
             </div>
 
@@ -197,7 +202,9 @@ export const AdminLoginPage: React.FC = () => {
                 <Mail className="w-4 h-4 text-text-muted absolute left-3 top-3" />
               </div>
               {forgotForm.formState.errors.email && (
-                <p className="text-[11px] text-danger">{forgotForm.formState.errors.email.message}</p>
+                <p className="text-[11px] text-danger">
+                  {forgotForm.formState.errors.email.message}
+                </p>
               )}
             </div>
 
@@ -242,7 +249,9 @@ export const AdminLoginPage: React.FC = () => {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-text-secondary">6-Digit Verification Code</label>
+              <label className="text-xs font-semibold text-text-secondary">
+                6-Digit Verification Code
+              </label>
               <div className="relative">
                 <input
                   type="text"
@@ -272,7 +281,9 @@ export const AdminLoginPage: React.FC = () => {
                 <KeyRound className="w-4 h-4 text-text-muted absolute left-3 top-3" />
               </div>
               {resetForm.formState.errors.newPassword && (
-                <p className="text-[11px] text-danger">{resetForm.formState.errors.newPassword.message}</p>
+                <p className="text-[11px] text-danger">
+                  {resetForm.formState.errors.newPassword.message}
+                </p>
               )}
             </div>
 
@@ -282,7 +293,9 @@ export const AdminLoginPage: React.FC = () => {
               className="w-full bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs py-3 rounded-xl shadow transition-transform active:scale-98 disabled:opacity-50"
               id="admin-reset-submit-btn"
             >
-              {resetForm.formState.isSubmitting ? 'Verifying & Resetting...' : 'Verify Code & Reset Password'}
+              {resetForm.formState.isSubmitting
+                ? 'Verifying & Resetting...'
+                : 'Verify Code & Reset Password'}
             </button>
 
             <button

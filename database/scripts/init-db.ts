@@ -44,10 +44,9 @@ async function initDatabase() {
       await client.connect();
 
       // Check if target database exists
-      const checkRes = await client.query(
-        `SELECT 1 FROM pg_database WHERE datname = $1`,
-        [targetDbName]
-      );
+      const checkRes = await client.query(`SELECT 1 FROM pg_database WHERE datname = $1`, [
+        targetDbName,
+      ]);
 
       if (checkRes.rowCount === 0) {
         console.log(`🔨 Database "${targetDbName}" does not exist. Creating database now...`);
@@ -62,7 +61,9 @@ async function initDatabase() {
       console.warn(`⚠️  Note on PostgreSQL server check: ${err.message}`);
       try {
         await client.end();
-      } catch {}
+      } catch {
+        // Ignore cleanup errors when closing the failed connection
+      }
     }
   }
 
@@ -79,7 +80,9 @@ async function initDatabase() {
         DATABASE_URL: dbUrl,
       },
     });
-    console.log(`🎉 Success! Database "${targetDbName}" and all tables are created and up-to-date.`);
+    console.log(
+      `🎉 Success! Database "${targetDbName}" and all tables are created and up-to-date.`
+    );
   } catch (err: any) {
     console.error('❌ Failed to create tables:', err.message);
     process.exit(1);

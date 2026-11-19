@@ -50,7 +50,11 @@ export const swaggerSpec = swaggerJSDoc({
             { name: 'maxPi', in: 'query', schema: { type: 'integer' } },
             { name: 'isDlc', in: 'query', schema: { type: 'boolean' } },
             { name: 'sort', in: 'query', schema: { type: 'string', default: 'fullName' } },
-            { name: 'order', in: 'query', schema: { type: 'string', enum: ['asc', 'desc'], default: 'asc' } },
+            {
+              name: 'order',
+              in: 'query',
+              schema: { type: 'string', enum: ['asc', 'desc'], default: 'asc' },
+            },
           ],
           responses: {
             '200': { description: 'Paginated list of cars' },

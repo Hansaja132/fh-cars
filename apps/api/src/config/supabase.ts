@@ -11,8 +11,8 @@ const supabaseUrl = !isPlaceholder(rawUrl) ? rawUrl : '';
 const supabaseKey = !isPlaceholder(rawServiceKey)
   ? rawServiceKey
   : !isPlaceholder(rawKey)
-  ? rawKey
-  : '';
+    ? rawKey
+    : '';
 
 export const BUCKET_NAME = (process.env.SUPABASE_STORAGE_BUCKET || '').trim();
 

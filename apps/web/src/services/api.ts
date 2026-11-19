@@ -10,7 +10,9 @@ import {
   AuditLog,
 } from '@fh6-cars/shared';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
+// VITE_API_URL is the backend origin (e.g. http://localhost:5000); the API version prefix is appended here.
+const API_ORIGIN = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+const API_BASE_URL = `${API_ORIGIN}/api/v1`;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -86,7 +88,10 @@ export const apiService = {
   },
 
   // Admin Auth
-  loginAdmin: async (email: string, password: string): Promise<{ token: string; user: AdminUser }> => {
+  loginAdmin: async (
+    email: string,
+    password: string
+  ): Promise<{ token: string; user: AdminUser }> => {
     const response = await apiClient.post('/auth/login', { email, password });
     return response.data.data;
   },
@@ -101,7 +106,11 @@ export const apiService = {
     return response.data.data;
   },
 
-  resetPassword: async (email: string, code: string, newPassword: string): Promise<{ message: string }> => {
+  resetPassword: async (
+    email: string,
+    code: string,
+    newPassword: string
+  ): Promise<{ message: string }> => {
     const response = await apiClient.post('/auth/reset-password', { email, code, newPassword });
     return response.data.data;
   },
@@ -138,13 +147,22 @@ export const apiService = {
   },
 
   importCars: async (content: string, fileType: 'json' | 'csv'): Promise<ImportSummary> => {
-    const headers = fileType === 'csv' ? { 'Content-Type': 'text/csv' } : { 'Content-Type': 'application/json' };
+    const headers =
+      fileType === 'csv' ? { 'Content-Type': 'text/csv' } : { 'Content-Type': 'application/json' };
     const payload = fileType === 'csv' ? content : JSON.parse(content);
     const response = await apiClient.post('/admin/import/cars', payload, { headers });
     return response.data.data;
   },
 
-  uploadCarImage: async (file: File): Promise<{ imageUrl: string; thumbnailUrl?: string; path: string; originalSize?: number; compressedSize?: number }> => {
+  uploadCarImage: async (
+    file: File
+  ): Promise<{
+    imageUrl: string;
+    thumbnailUrl?: string;
+    path: string;
+    originalSize?: number;
+    compressedSize?: number;
+  }> => {
     const formData = new FormData();
     formData.append('image', file);
     const response = await apiClient.post('/admin/cars/upload', formData, {

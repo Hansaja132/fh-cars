@@ -65,7 +65,8 @@ export class CarRepository {
     else if (sortField === 'basePi' || sortField === 'pi') orderBy = { basePi: orderDirection };
     else if (sortField === 'model') orderBy = { model: orderDirection };
     else if (sortField === 'fullName') orderBy = { fullName: orderDirection };
-    else if (sortField === 'brand' || sortField === 'brand.name') orderBy = { brand: { name: orderDirection } };
+    else if (sortField === 'brand' || sortField === 'brand.name')
+      orderBy = { brand: { name: orderDirection } };
     else if (sortField === 'class') orderBy = { class: orderDirection };
     else if (sortField === 'drivetrain') orderBy = { drivetrain: orderDirection };
     else if (sortField === 'country') orderBy = { country: orderDirection };
@@ -274,8 +275,6 @@ export class CarRepository {
       distinct: [field],
     });
 
-    return cars
-      .map((c: any) => c[field])
-      .filter(Boolean);
+    return cars.map((c: any) => c[field]).filter(Boolean);
   }
 }

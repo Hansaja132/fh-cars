@@ -18,7 +18,8 @@ export const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-xs text-text-muted leading-relaxed">
-              Standalone Forza Horizon 6 Car Database and public REST API for websites, tools, and automotive enthusiasts.
+              Standalone Forza Horizon 6 Car Database and public REST API for websites, tools, and
+              automotive enthusiasts.
             </p>
           </div>
 
@@ -26,10 +27,26 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-foreground font-display font-semibold text-sm mb-3">Database</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link to="/cars" className="hover:text-primary transition-colors">Browse All Cars</Link></li>
-              <li><Link to="/brands" className="hover:text-primary transition-colors">Manufacturers</Link></li>
-              <li><Link to="/compare" className="hover:text-primary transition-colors">Car Comparison</Link></li>
-              <li><Link to="/cars?isDlc=true" className="hover:text-primary transition-colors">DLC Cars</Link></li>
+              <li>
+                <Link to="/cars" className="hover:text-primary transition-colors">
+                  Browse All Cars
+                </Link>
+              </li>
+              <li>
+                <Link to="/brands" className="hover:text-primary transition-colors">
+                  Manufacturers
+                </Link>
+              </li>
+              <li>
+                <Link to="/compare" className="hover:text-primary transition-colors">
+                  Car Comparison
+                </Link>
+              </li>
+              <li>
+                <Link to="/cars?isDlc=true" className="hover:text-primary transition-colors">
+                  DLC Cars
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -37,9 +54,36 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-foreground font-display font-semibold text-sm mb-3">Developers</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link to="/api" className="hover:text-primary transition-colors flex items-center space-x-1"><Code className="w-3.5 h-3.5"/><span>REST API Overview</span></Link></li>
-              <li><a href="/api/docs" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors flex items-center space-x-1"><Database className="w-3.5 h-3.5"/><span>Swagger UI Docs</span></a></li>
-              <li><a href="/api/v1/statistics" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">API Statistics JSON</a></li>
+              <li>
+                <Link
+                  to="/api"
+                  className="hover:text-primary transition-colors flex items-center space-x-1"
+                >
+                  <Code className="w-3.5 h-3.5" />
+                  <span>REST API Overview</span>
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="/api/docs"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-primary transition-colors flex items-center space-x-1"
+                >
+                  <Database className="w-3.5 h-3.5" />
+                  <span>Swagger UI Docs</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/api/v1/statistics"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  API Statistics JSON
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -47,8 +91,14 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-foreground font-display font-semibold text-sm mb-3">Platform</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link to="/about" className="hover:text-primary transition-colors">About & Sources</Link></li>
-              <li className="text-text-muted pt-2 text-[11px]">Not affiliated with Playground Games or Turn 10 Studios.</li>
+              <li>
+                <Link to="/about" className="hover:text-primary transition-colors">
+                  About & Sources
+                </Link>
+              </li>
+              <li className="text-text-muted pt-2 text-[11px]">
+                Not affiliated with Playground Games or Turn 10 Studios.
+              </li>
             </ul>
           </div>
         </div>

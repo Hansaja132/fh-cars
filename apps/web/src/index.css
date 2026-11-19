@@ -5,29 +5,29 @@
 @layer base {
   :root,
   .light {
-    --background: #F4F7FA;
-    --foreground: #10202F;
-    --surface: #FFFFFF;
-    --card: #FFFFFF;
-    --elevated: #FFFFFF;
-    --border: #D9E2EC;
+    --background: #f4f7fa;
+    --foreground: #10202f;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --elevated: #ffffff;
+    --border: #d9e2ec;
 
-    --primary: #0097B2;
-    --primary-hover: #007F95;
-    --primary-foreground: #FFFFFF;
+    --primary: #0097b2;
+    --primary-hover: #007f95;
+    --primary-foreground: #ffffff;
 
-    --secondary: #356FE6;
-    --secondary-hover: #2F63CF;
+    --secondary: #356fe6;
+    --secondary-hover: #2f63cf;
 
-    --muted: #E8EEF4;
+    --muted: #e8eef4;
     --muted-foreground: #526273;
 
     --text-secondary: #526273;
-    --text-muted: #7B8794;
+    --text-muted: #7b8794;
 
-    --success: #22C55E;
-    --warning: #F59E0B;
-    --danger: #EF4444;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
 
     /* Space-separated RGB channel equivalents for Tailwind opacity support */
     --background-rgb: 244 247 250;
@@ -44,40 +44,40 @@
     --muted-foreground-rgb: 82 98 115;
 
     /* FH6 Class colors */
-    --class-d: #06B6D4;
-    --class-c: #EAB308;
-    --class-b: #F97316;
-    --class-a: #EF4444;
-    --class-s1: #A855F7;
-    --class-s2: #2563EB;
-    --class-r: #D946EF;
-    --class-x: #22C55E;
+    --class-d: #06b6d4;
+    --class-c: #eab308;
+    --class-b: #f97316;
+    --class-a: #ef4444;
+    --class-s1: #a855f7;
+    --class-s2: #2563eb;
+    --class-r: #d946ef;
+    --class-x: #22c55e;
   }
 
   .dark {
-    --background: #0B0F14;
-    --foreground: #F1F5F9;
+    --background: #0b0f14;
+    --foreground: #f1f5f9;
     --surface: #111820;
-    --card: #151E27;
-    --elevated: #18212B;
+    --card: #151e27;
+    --elevated: #18212b;
     --border: #263341;
 
-    --primary: #00B8D9;
-    --primary-hover: #22D3EE;
+    --primary: #00b8d9;
+    --primary-hover: #22d3ee;
     --primary-foreground: #061018;
 
-    --secondary: #4C8DFF;
-    --secondary-hover: #5D9AFF;
+    --secondary: #4c8dff;
+    --secondary-hover: #5d9aff;
 
-    --muted: #18212B;
-    --muted-foreground: #A8B3C2;
+    --muted: #18212b;
+    --muted-foreground: #a8b3c2;
 
-    --text-secondary: #A8B3C2;
+    --text-secondary: #a8b3c2;
     --text-muted: #718096;
 
-    --success: #22C55E;
-    --warning: #F59E0B;
-    --danger: #EF4444;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
 
     /* Space-separated RGB channel equivalents */
     --background-rgb: 11 15 20;
@@ -100,10 +100,18 @@ body {
   overflow-x: hidden;
   background-color: var(--background);
   color: var(--foreground);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
-h1, h2, h3, h4, h5, h6, .font-display {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
   font-family: 'Outfit', sans-serif;
 }
 

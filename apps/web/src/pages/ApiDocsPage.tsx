@@ -38,7 +38,8 @@ print(data)`;
           FH6 Cars REST API
         </h1>
         <p className="text-text-secondary text-sm max-w-2xl leading-relaxed">
-          Access structured Forza Horizon 6 car statistics, base PI, engine specs, and manufacturers programmatically using standard HTTP JSON endpoints.
+          Access structured Forza Horizon 6 car statistics, base PI, engine specs, and manufacturers
+          programmatically using standard HTTP JSON endpoints.
         </p>
 
         <div className="pt-2 flex flex-wrap gap-4">
@@ -77,7 +78,9 @@ print(data)`;
               </span>
               <code className="font-mono text-sm text-foreground font-semibold">/api/v1/cars</code>
             </div>
-            <span className="text-xs text-text-muted">Get paginated list of cars with filters (brand, class, PI, year, drivetrain)</span>
+            <span className="text-xs text-text-muted">
+              Get paginated list of cars with filters (brand, class, PI, year, drivetrain)
+            </span>
           </div>
 
           <div className="p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
@@ -85,9 +88,13 @@ print(data)`;
               <span className="bg-primary/10 text-primary font-mono text-xs px-2.5 py-1 rounded font-bold border border-primary/30">
                 GET
               </span>
-              <code className="font-mono text-sm text-foreground font-semibold">/api/v1/cars/:id</code>
+              <code className="font-mono text-sm text-foreground font-semibold">
+                /api/v1/cars/:id
+              </code>
             </div>
-            <span className="text-xs text-text-muted">Get complete details, ratings, engine, and images for a car</span>
+            <span className="text-xs text-text-muted">
+              Get complete details, ratings, engine, and images for a car
+            </span>
           </div>
 
           <div className="p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
@@ -95,9 +102,13 @@ print(data)`;
               <span className="bg-primary/10 text-primary font-mono text-xs px-2.5 py-1 rounded font-bold border border-primary/30">
                 GET
               </span>
-              <code className="font-mono text-sm text-foreground font-semibold">/api/v1/cars/search?q=supra</code>
+              <code className="font-mono text-sm text-foreground font-semibold">
+                /api/v1/cars/search?q=supra
+              </code>
             </div>
-            <span className="text-xs text-text-muted">Search cars across model, manufacturer, and country</span>
+            <span className="text-xs text-text-muted">
+              Search cars across model, manufacturer, and country
+            </span>
           </div>
 
           <div className="p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
@@ -105,9 +116,13 @@ print(data)`;
               <span className="bg-primary/10 text-primary font-mono text-xs px-2.5 py-1 rounded font-bold border border-primary/30">
                 GET
               </span>
-              <code className="font-mono text-sm text-foreground font-semibold">/api/v1/brands</code>
+              <code className="font-mono text-sm text-foreground font-semibold">
+                /api/v1/brands
+              </code>
             </div>
-            <span className="text-xs text-text-muted">Get list of manufacturers and car counts</span>
+            <span className="text-xs text-text-muted">
+              Get list of manufacturers and car counts
+            </span>
           </div>
 
           <div className="p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
@@ -115,16 +130,22 @@ print(data)`;
               <span className="bg-primary/10 text-primary font-mono text-xs px-2.5 py-1 rounded font-bold border border-primary/30">
                 GET
               </span>
-              <code className="font-mono text-sm text-foreground font-semibold">/api/v1/statistics</code>
+              <code className="font-mono text-sm text-foreground font-semibold">
+                /api/v1/statistics
+              </code>
             </div>
-            <span className="text-xs text-text-muted">Get overall database breakdown and class distribution</span>
+            <span className="text-xs text-text-muted">
+              Get overall database breakdown and class distribution
+            </span>
           </div>
         </div>
       </div>
 
       {/* Code Examples (Dark Technical Appearance across all modes) */}
       <div className="space-y-6">
-        <h2 className="font-display font-bold text-xl text-foreground">Integration Code Snippets</h2>
+        <h2 className="font-display font-bold text-xl text-foreground">
+          Integration Code Snippets
+        </h2>
 
         {/* JavaScript */}
         <div className="bg-card border border-border rounded-2xl p-4 space-y-2 shadow-sm">
@@ -134,7 +155,11 @@ print(data)`;
               onClick={() => copyToClipboard(jsSnippet, 1)}
               className="text-text-muted hover:text-foreground flex items-center space-x-1 transition-colors"
             >
-              {copiedIndex === 1 ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedIndex === 1 ? (
+                <Check className="w-3.5 h-3.5 text-success" />
+              ) : (
+                <Copy className="w-3.5 h-3.5" />
+              )}
               <span>{copiedIndex === 1 ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
@@ -151,7 +176,11 @@ print(data)`;
               onClick={() => copyToClipboard(pythonSnippet, 2)}
               className="text-text-muted hover:text-foreground flex items-center space-x-1 transition-colors"
             >
-              {copiedIndex === 2 ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedIndex === 2 ? (
+                <Check className="w-3.5 h-3.5 text-success" />
+              ) : (
+                <Copy className="w-3.5 h-3.5" />
+              )}
               <span>{copiedIndex === 2 ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
@@ -168,7 +197,11 @@ print(data)`;
               onClick={() => copyToClipboard(curlSnippet, 3)}
               className="text-text-muted hover:text-foreground flex items-center space-x-1 transition-colors"
             >
-              {copiedIndex === 3 ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedIndex === 3 ? (
+                <Check className="w-3.5 h-3.5 text-success" />
+              ) : (
+                <Copy className="w-3.5 h-3.5" />
+              )}
               <span>{copiedIndex === 3 ? 'Copied' : 'Copy'}</span>
             </button>
           </div>

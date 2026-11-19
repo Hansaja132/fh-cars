@@ -32,11 +32,13 @@ pnpm db:init "postgresql://postgres:TestPassword123@localhost:5432/my_custom_fh6
 ## 🚀 Quick Start & Local Development
 
 ### 1. Prerequisites
-* Node.js (>= 18.0.0)
-* pnpm (>= 8.0.0)
-* Docker or PostgreSQL 16
+
+- Node.js (>= 18.0.0)
+- pnpm (>= 8.0.0)
+- Docker or PostgreSQL 16
 
 ### 2. Clone & Install Dependencies
+
 ```bash
 git clone https://github.com/fh6cars/fh6-cars.git
 cd fh6-cars
@@ -45,6 +47,7 @@ pnpm install
 ```
 
 ### 3. Start Database & Run Setup
+
 ```bash
 # Start PostgreSQL via Docker Compose
 docker compose up -d
@@ -54,11 +57,13 @@ pnpm db:setup
 ```
 
 ### 4. Start Development Servers
+
 ```bash
 pnpm dev
 ```
 
 ### Expected Endpoints:
-* **Frontend Web App**: `http://localhost:5173`
-* **REST API**: `http://localhost:5000/api/v1`
-* **Swagger UI API Docs**: `http://localhost:5000/api/docs`
+
+- **Frontend Web App**: `http://localhost:5173`
+- **REST API**: `http://localhost:5000/api/v1`
+- **Swagger UI API Docs**: `http://localhost:5000/api/docs`

@@ -19,13 +19,18 @@ export const BrandsPage: React.FC = () => {
           <span>Automotive Manufacturers</span>
         </div>
         <h1 className="font-display font-extrabold text-3xl text-foreground">Car Brands</h1>
-        <p className="text-xs text-text-muted">Explore manufacturers cataloged in Forza Horizon 6</p>
+        <p className="text-xs text-text-muted">
+          Explore manufacturers cataloged in Forza Horizon 6
+        </p>
       </div>
 
       {isLoading ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="h-28 bg-elevated rounded-xl animate-pulse border border-border" />
+            <div
+              key={i}
+              className="h-28 bg-elevated rounded-xl animate-pulse border border-border"
+            />
           ))}
         </div>
       ) : (
