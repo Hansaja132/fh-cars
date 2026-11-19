@@ -33,7 +33,9 @@ export const ClassBadge: React.FC<ClassBadgeProps> = ({ className = 'A', pi, siz
     >
       <span className="uppercase tracking-wider font-extrabold">{normalizedClass}</span>
       {pi !== undefined && (
-        <span className="opacity-90 border-l border-current/20 pl-1.5 font-mono font-black">{pi}</span>
+        <span className="opacity-90 border-l border-current/20 pl-1.5 font-mono font-black">
+          {pi}
+        </span>
       )}
     </div>
   );

@@ -39,7 +39,7 @@ export const HomePage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-3xl bg-surface border border-border shadow-md">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
-        
+
         <div className="relative max-w-4xl mx-auto text-center space-y-8">
           <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary border border-primary/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
             <Gauge className="w-4 h-4 text-primary" />
@@ -54,7 +54,8 @@ export const HomePage: React.FC = () => {
           </h1>
 
           <p className="text-text-secondary text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            Explore complete car performance statistics, base PI ratings, classes, engines, manufacturers, and specifications. Open public REST API for developers.
+            Explore complete car performance statistics, base PI ratings, classes, engines,
+            manufacturers, and specifications. Open public REST API for developers.
           </p>
 
           {/* Search Box */}
@@ -104,21 +105,31 @@ export const HomePage: React.FC = () => {
             <div className="text-3xl sm:text-4xl font-extrabold font-display text-primary">
               {stats?.totalCars ?? 20}+
             </div>
-            <div className="text-xs uppercase tracking-wider font-semibold text-text-secondary">Cars Cataloged</div>
+            <div className="text-xs uppercase tracking-wider font-semibold text-text-secondary">
+              Cars Cataloged
+            </div>
           </div>
           <div className="bg-card border border-border rounded-2xl p-6 text-center space-y-1 shadow-sm">
             <div className="text-3xl sm:text-4xl font-extrabold font-display text-primary">
               {stats?.totalBrands ?? 15}+
             </div>
-            <div className="text-xs uppercase tracking-wider font-semibold text-text-secondary">Manufacturers</div>
+            <div className="text-xs uppercase tracking-wider font-semibold text-text-secondary">
+              Manufacturers
+            </div>
           </div>
           <div className="bg-card border border-border rounded-2xl p-6 text-center space-y-1 shadow-sm">
             <div className="text-3xl sm:text-4xl font-extrabold font-display text-primary">8</div>
-            <div className="text-xs uppercase tracking-wider font-semibold text-text-secondary">Classes (D to X)</div>
+            <div className="text-xs uppercase tracking-wider font-semibold text-text-secondary">
+              Classes (D to X)
+            </div>
           </div>
           <div className="bg-card border border-border rounded-2xl p-6 text-center space-y-1 shadow-sm">
-            <div className="text-3xl sm:text-4xl font-extrabold font-display text-primary">100%</div>
-            <div className="text-xs uppercase tracking-wider font-semibold text-text-secondary">REST API Ready</div>
+            <div className="text-3xl sm:text-4xl font-extrabold font-display text-primary">
+              100%
+            </div>
+            <div className="text-xs uppercase tracking-wider font-semibold text-text-secondary">
+              REST API Ready
+            </div>
           </div>
         </div>
       </section>
@@ -127,8 +138,12 @@ export const HomePage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex justify-between items-end">
           <div>
-            <h2 className="font-display font-extrabold text-2xl text-foreground">Browse By Performance Class</h2>
-            <p className="text-xs text-text-muted mt-1">Filter cars by Forza Horizon PI performance tier</p>
+            <h2 className="font-display font-extrabold text-2xl text-foreground">
+              Browse By Performance Class
+            </h2>
+            <p className="text-xs text-text-muted mt-1">
+              Filter cars by Forza Horizon PI performance tier
+            </p>
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3">
@@ -154,10 +169,15 @@ export const HomePage: React.FC = () => {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="flex justify-between items-end">
             <div>
-              <h2 className="font-display font-extrabold text-2xl text-foreground">Featured Cars</h2>
+              <h2 className="font-display font-extrabold text-2xl text-foreground">
+                Featured Cars
+              </h2>
               <p className="text-xs text-text-muted mt-1">High PI hypercars & track monsters</p>
             </div>
-            <Link to="/cars" className="text-xs font-bold text-primary hover:text-primary-hover flex items-center space-x-1">
+            <Link
+              to="/cars"
+              className="text-xs font-bold text-primary hover:text-primary-hover flex items-center space-x-1"
+            >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -175,10 +195,15 @@ export const HomePage: React.FC = () => {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="flex justify-between items-end">
             <div>
-              <h2 className="font-display font-extrabold text-2xl text-foreground">Popular Manufacturers</h2>
+              <h2 className="font-display font-extrabold text-2xl text-foreground">
+                Popular Manufacturers
+              </h2>
               <p className="text-xs text-text-muted mt-1">Browse cars by automotive brand</p>
             </div>
-            <Link to="/brands" className="text-xs font-bold text-primary hover:text-primary-hover flex items-center space-x-1">
+            <Link
+              to="/brands"
+              className="text-xs font-bold text-primary hover:text-primary-hover flex items-center space-x-1"
+            >
               <span>All Brands</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -193,9 +218,7 @@ export const HomePage: React.FC = () => {
                 <div className="font-display font-bold text-foreground group-hover:text-primary transition-colors">
                   {brand.name}
                 </div>
-                <div className="text-xs text-text-muted font-mono">
-                  {brand.country || 'Global'}
-                </div>
+                <div className="text-xs text-text-muted font-mono">{brand.country || 'Global'}</div>
               </Link>
             ))}
           </div>

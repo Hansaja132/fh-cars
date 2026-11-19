@@ -6,11 +6,24 @@ const storage = multer.memoryStorage();
 
 // File filter to restrict uploads to valid image types
 const fileFilter = (_req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-  const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
+  const allowedMimeTypes = [
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/webp',
+    'image/gif',
+    'image/svg+xml',
+  ];
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new AppError('Invalid file type. Only JPEG, PNG, WEBP, GIF, and SVG images are allowed.', 400, 'INVALID_FILE_TYPE'));
+    cb(
+      new AppError(
+        'Invalid file type. Only JPEG, PNG, WEBP, GIF, and SVG images are allowed.',
+        400,
+        'INVALID_FILE_TYPE'
+      )
+    );
   }
 };
 

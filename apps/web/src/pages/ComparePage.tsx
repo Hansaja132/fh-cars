@@ -47,10 +47,14 @@ export const ComparePage: React.FC = () => {
         <div>
           <div className="flex items-center space-x-2 text-primary mb-1">
             <Scale className="w-5 h-5" />
-            <span className="text-xs font-bold uppercase tracking-wider">Side-By-Side Spec Analysis</span>
+            <span className="text-xs font-bold uppercase tracking-wider">
+              Side-By-Side Spec Analysis
+            </span>
           </div>
           <h1 className="font-display font-extrabold text-3xl text-foreground">Compare Cars</h1>
-          <p className="text-xs text-text-muted mt-1">Select up to 4 Forza Horizon 6 cars to compare specs & ratings</p>
+          <p className="text-xs text-text-muted mt-1">
+            Select up to 4 Forza Horizon 6 cars to compare specs & ratings
+          </p>
         </div>
 
         {/* Add Car Button */}
@@ -88,7 +92,9 @@ export const ComparePage: React.FC = () => {
                       </button>
                     ))
                   ) : (
-                    <div className="text-xs text-text-muted p-2 text-center">No available cars found</div>
+                    <div className="text-xs text-text-muted p-2 text-center">
+                      No available cars found
+                    </div>
                   )}
                 </div>
               </div>
@@ -103,7 +109,9 @@ export const ComparePage: React.FC = () => {
           <table className="w-full text-left border-collapse min-w-[600px]">
             <thead>
               <tr className="border-b border-border bg-surface">
-                <th className="p-4 w-48 text-xs uppercase font-extrabold text-text-muted">Spec Metric</th>
+                <th className="p-4 w-48 text-xs uppercase font-extrabold text-text-muted">
+                  Spec Metric
+                </th>
                 {selectedCars.map((car) => (
                   <th key={car.id} className="p-4 text-center border-l border-border">
                     <div className="relative space-y-2">
@@ -122,7 +130,9 @@ export const ComparePage: React.FC = () => {
                         alt={car.fullName}
                         className="w-28 h-16 object-cover mx-auto rounded-lg border border-border shadow-sm"
                       />
-                      <div className="font-display font-bold text-sm text-foreground">{car.model}</div>
+                      <div className="font-display font-bold text-sm text-foreground">
+                        {car.model}
+                      </div>
                       <div className="text-[11px] text-text-muted">{car.brand?.name}</div>
                       <ClassBadge className={car.class} pi={car.basePi} size="sm" />
                     </div>
@@ -136,7 +146,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Base PI Rating</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono font-bold text-primary text-sm border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono font-bold text-primary text-sm border-l border-border"
+                  >
                     {car.basePi}
                   </td>
                 ))}
@@ -146,7 +159,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Drivetrain</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono font-bold text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono font-bold text-foreground border-l border-border"
+                  >
                     {car.drivetrain}
                   </td>
                 ))}
@@ -156,7 +172,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Speed</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono font-bold text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono font-bold text-foreground border-l border-border"
+                  >
                     {car.stats?.speed?.toFixed(1) ?? 'N/A'}
                   </td>
                 ))}
@@ -166,7 +185,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Handling</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono font-bold text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono font-bold text-foreground border-l border-border"
+                  >
                     {car.stats?.handling?.toFixed(1) ?? 'N/A'}
                   </td>
                 ))}
@@ -176,7 +198,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Acceleration</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono font-bold text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono font-bold text-foreground border-l border-border"
+                  >
                     {car.stats?.acceleration?.toFixed(1) ?? 'N/A'}
                   </td>
                 ))}
@@ -186,7 +211,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Launch</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono font-bold text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono font-bold text-foreground border-l border-border"
+                  >
                     {car.stats?.launch?.toFixed(1) ?? 'N/A'}
                   </td>
                 ))}
@@ -196,7 +224,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Braking</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono font-bold text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono font-bold text-foreground border-l border-border"
+                  >
                     {car.stats?.braking?.toFixed(1) ?? 'N/A'}
                   </td>
                 ))}
@@ -206,7 +237,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Offroad</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono font-bold text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono font-bold text-foreground border-l border-border"
+                  >
                     {car.stats?.offroad?.toFixed(1) ?? 'N/A'}
                   </td>
                 ))}
@@ -216,7 +250,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Power (HP)</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono text-foreground border-l border-border"
+                  >
                     {car.stats?.powerHp ? `${car.stats.powerHp} HP` : 'N/A'}
                   </td>
                 ))}
@@ -226,7 +263,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Weight (KG)</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono text-foreground border-l border-border"
+                  >
                     {car.stats?.weightKg ? `${car.stats.weightKg} kg` : 'N/A'}
                   </td>
                 ))}
@@ -236,7 +276,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Top Speed</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center font-mono text-foreground border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center font-mono text-foreground border-l border-border"
+                  >
                     {car.stats?.topSpeedKmh ? `${car.stats.topSpeedKmh} km/h` : 'N/A'}
                   </td>
                 ))}
@@ -246,7 +289,10 @@ export const ComparePage: React.FC = () => {
               <tr className="hover:bg-elevated/50 transition-colors">
                 <td className="p-4 font-semibold text-text-secondary">Aspiration</td>
                 {selectedCars.map((car) => (
-                  <td key={car.id} className="p-4 text-center text-text-secondary border-l border-border">
+                  <td
+                    key={car.id}
+                    className="p-4 text-center text-text-secondary border-l border-border"
+                  >
                     {car.engine?.aspiration || 'N/A'}
                   </td>
                 ))}
@@ -256,7 +302,9 @@ export const ComparePage: React.FC = () => {
         </div>
       ) : (
         <div className="bg-card border border-border p-12 rounded-2xl text-center space-y-4 shadow-sm">
-          <div className="text-text-muted font-display text-lg">No cars selected for comparison</div>
+          <div className="text-text-muted font-display text-lg">
+            No cars selected for comparison
+          </div>
           <button
             onClick={() => setSelectedCarIds([1, 2])}
             className="bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs px-5 py-2.5 rounded-xl shadow"

@@ -26,7 +26,9 @@ export class AuthController {
   public me = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       if (!req.user) {
-        return res.status(401).json({ error: { code: 'UNAUTHORIZED', message: 'Not authenticated' } });
+        return res
+          .status(401)
+          .json({ error: { code: 'UNAUTHORIZED', message: 'Not authenticated' } });
       }
       const user = await this.authService.getMe(req.user.id);
       return res.status(200).json({ data: user });

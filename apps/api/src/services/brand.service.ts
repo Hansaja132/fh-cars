@@ -18,7 +18,10 @@ export class BrandService {
     return brand;
   }
 
-  async createBrand(data: { name: string; slug: string; country?: string | null; logoUrl?: string | null }, adminUserId?: number) {
+  async createBrand(
+    data: { name: string; slug: string; country?: string | null; logoUrl?: string | null },
+    adminUserId?: number
+  ) {
     const existingName = await this.brandRepo.findByName(data.name);
     if (existingName) {
       throw new AppError(`Brand with name '${data.name}' already exists`, 409, 'BRAND_EXISTS');

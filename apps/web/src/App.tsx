@@ -52,7 +52,10 @@ export const App: React.FC = () => {
 
                   {/* Secret Admin Login Route */}
                   <Route path="/secret-admin-portal" element={<AdminLoginPage />} />
-                  <Route path="/admin/login" element={<Navigate to="/secret-admin-portal" replace />} />
+                  <Route
+                    path="/admin/login"
+                    element={<Navigate to="/secret-admin-portal" replace />}
+                  />
 
                   {/* Protected Admin Routes */}
                   <Route

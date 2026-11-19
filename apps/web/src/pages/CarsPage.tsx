@@ -30,7 +30,11 @@ export const CarsPage: React.FC = () => {
     queryFn: () => apiService.getBrands(),
   });
 
-  const { data: carsData, isLoading, isError } = useQuery({
+  const {
+    data: carsData,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ['cars', page, search, brand, carClass, drivetrain, minPi, maxPi, isDlc, sort, order],
     queryFn: () =>
       apiService.getCars({
@@ -164,13 +168,18 @@ export const CarsPage: React.FC = () => {
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-72 bg-elevated rounded-xl animate-pulse border border-border" />
+                <div
+                  key={i}
+                  className="h-72 bg-elevated rounded-xl animate-pulse border border-border"
+                />
               ))}
             </div>
           ) : isError ? (
             <div className="bg-danger/10 border border-danger/30 p-8 rounded-xl text-center space-y-2 text-danger">
               <h3 className="font-bold text-lg">Unable to load cars</h3>
-              <p className="text-xs opacity-90">Ensure the API backend is running and accessible.</p>
+              <p className="text-xs opacity-90">
+                Ensure the API backend is running and accessible.
+              </p>
             </div>
           ) : carsData && carsData.data.length > 0 ? (
             <>
@@ -180,7 +189,9 @@ export const CarsPage: React.FC = () => {
                   Showing <strong className="text-foreground">{carsData.data.length}</strong> of{' '}
                   <strong className="text-foreground">{carsData.pagination.total}</strong> cars
                 </span>
-                <span>Page {carsData.pagination.page} of {carsData.pagination.totalPages}</span>
+                <span>
+                  Page {carsData.pagination.page} of {carsData.pagination.totalPages}
+                </span>
               </div>
 
               {/* Cars Grid */}
@@ -215,7 +226,9 @@ export const CarsPage: React.FC = () => {
             </>
           ) : (
             <div className="bg-card border border-border p-12 rounded-2xl text-center space-y-4 shadow-sm">
-              <div className="text-text-muted font-display text-lg">No cars match your search filters</div>
+              <div className="text-text-muted font-display text-lg">
+                No cars match your search filters
+              </div>
               <button
                 onClick={handleResetFilters}
                 className="bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs px-5 py-2.5 rounded-xl shadow transition-transform active:scale-95"

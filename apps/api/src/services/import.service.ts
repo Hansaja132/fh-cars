@@ -9,11 +9,7 @@ export class ImportService {
   private carRepo = new CarRepository();
   private adminRepo = new AdminRepository();
 
-  async importCars(
-    content: string,
-    fileType: 'json' | 'csv',
-    adminUserId?: number
-  ) {
+  async importCars(content: string, fileType: 'json' | 'csv', adminUserId?: number) {
     let records: any[] = [];
     const details: string[] = [];
 
@@ -29,10 +25,21 @@ export class ImportService {
           skip_empty_lines: true,
           trim: true,
           cast: (value, context) => {
-            if (context.column === 'year' || context.column === 'basePi' || context.column === 'carOrdinal') {
+            if (
+              context.column === 'year' ||
+              context.column === 'basePi' ||
+              context.column === 'carOrdinal'
+            ) {
               return value ? parseInt(value, 10) : undefined;
             }
-            if (context.column === 'speed' || context.column === 'handling' || context.column === 'acceleration' || context.column === 'launch' || context.column === 'braking' || context.column === 'offroad') {
+            if (
+              context.column === 'speed' ||
+              context.column === 'handling' ||
+              context.column === 'acceleration' ||
+              context.column === 'launch' ||
+              context.column === 'braking' ||
+              context.column === 'offroad'
+            ) {
               return value ? parseFloat(value) : undefined;
             }
             if (context.column === 'isDlc' || context.column === 'isAvailable') {
@@ -64,7 +71,9 @@ export class ImportService {
 
       if (!validation.success) {
         errors++;
-        details.push(`Row ${index + 1}: ${validation.error.errors.map((err) => `${err.path.join('.')}: ${err.message}`).join(', ')}`);
+        details.push(
+          `Row ${index + 1}: ${validation.error.errors.map((err) => `${err.path.join('.')}: ${err.message}`).join(', ')}`
+        );
         continue;
       }
 
@@ -73,7 +82,7 @@ export class ImportService {
       // Check or create Brand
       const brandName = carData.brand.trim();
       const brandSlug = brandName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      
+
       let brand = await this.brandRepo.findByName(brandName);
       if (!brand) {
         brand = await this.brandRepo.create({
@@ -93,7 +102,10 @@ export class ImportService {
 
       if (!existing) {
         const foundCars = await this.carRepo.findMany({ search: fullName, limit: 1 });
-        if (foundCars.data.length > 0 && foundCars.data[0].fullName.toLowerCase() === fullName.toLowerCase()) {
+        if (
+          foundCars.data.length > 0 &&
+          foundCars.data[0].fullName.toLowerCase() === fullName.toLowerCase()
+        ) {
           existing = foundCars.data[0];
         }
       }

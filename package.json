@@ -15,7 +15,9 @@
     "db:seed": "pnpm --filter database db:seed",
     "db:studio": "pnpm --filter database db:studio",
     "test": "pnpm --filter \"./apps/*\" test",
-    "lint": "echo \"No lint errors\""
+    "lint": "echo \"No lint errors\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -28,5 +30,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.10.1"
   }
 }

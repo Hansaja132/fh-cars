@@ -83,7 +83,10 @@ export const carQuerySchema = z.object({
   carType: z.string().optional(),
   minPi: z.coerce.number().int().min(0).max(999).optional(),
   maxPi: z.coerce.number().int().min(0).max(999).optional(),
-  isDlc: z.preprocess((val) => val === 'true' ? true : val === 'false' ? false : val, z.boolean().optional()),
+  isDlc: z.preprocess(
+    (val) => (val === 'true' ? true : val === 'false' ? false : val),
+    z.boolean().optional()
+  ),
   sort: z.string().default('fullName'),
   order: z.enum(['asc', 'desc']).default('asc'),
 });

@@ -42,13 +42,21 @@ export class BrandRepository {
     });
   }
 
-  async create(data: { name: string; slug: string; country?: string | null; logoUrl?: string | null }) {
+  async create(data: {
+    name: string;
+    slug: string;
+    country?: string | null;
+    logoUrl?: string | null;
+  }) {
     return prisma.brand.create({
       data,
     });
   }
 
-  async update(id: number, data: { name?: string; slug?: string; country?: string | null; logoUrl?: string | null }) {
+  async update(
+    id: number,
+    data: { name?: string; slug?: string; country?: string | null; logoUrl?: string | null }
+  ) {
     return prisma.brand.update({
       where: { id },
       data,

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+coverage/
+pnpm-lock.yaml
+*.log
+.env
+.env.*
+!.env.example
+database/prisma/migrations/
+*.min.js
+*.min.css
+

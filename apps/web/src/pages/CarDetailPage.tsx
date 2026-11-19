@@ -4,14 +4,26 @@ import { useQuery } from '@tanstack/react-query';
 import { apiService } from '../services/api';
 import { ClassBadge } from '../components/ClassBadge';
 import { StatGauge } from '../components/StatGauge';
-import { ArrowLeft, ShieldCheck, Gauge, Sparkles, ExternalLink, Cpu, Car as CarIcon } from 'lucide-react';
+import {
+  ArrowLeft,
+  ShieldCheck,
+  Gauge,
+  Sparkles,
+  ExternalLink,
+  Cpu,
+  Car as CarIcon,
+} from 'lucide-react';
 
 export const CarDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const carId = parseInt(id || '0', 10);
   const [imageFailed, setImageFailed] = useState(false);
 
-  const { data: car, isLoading, isError } = useQuery({
+  const {
+    data: car,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ['car', carId],
     queryFn: () => apiService.getCarById(carId),
     enabled: carId > 0,
@@ -30,8 +42,13 @@ export const CarDetailPage: React.FC = () => {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center space-y-4">
         <h2 className="text-2xl font-bold text-foreground">Car Not Found</h2>
-        <p className="text-text-muted text-sm">The car ID you requested does not exist in our database.</p>
-        <Link to="/cars" className="inline-block bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs px-5 py-2.5 rounded-xl shadow">
+        <p className="text-text-muted text-sm">
+          The car ID you requested does not exist in our database.
+        </p>
+        <Link
+          to="/cars"
+          className="inline-block bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs px-5 py-2.5 rounded-xl shadow"
+        >
           Back to Catalog
         </Link>
       </div>
@@ -39,9 +56,7 @@ export const CarDetailPage: React.FC = () => {
   }
 
   const primaryImage =
-    car.images?.find((img) => img.isPrimary)?.imageUrl ||
-    car.images?.[0]?.imageUrl ||
-    null;
+    car.images?.find((img) => img.isPrimary)?.imageUrl || car.images?.[0]?.imageUrl || null;
 
   const brandName = car.brand?.name || 'Manufacturer';
 
@@ -136,7 +151,9 @@ export const CarDetailPage: React.FC = () => {
           <div className="flex items-center justify-between pb-3 border-b border-border">
             <div className="flex items-center space-x-2">
               <Gauge className="w-5 h-5 text-primary" />
-              <h3 className="font-display font-bold text-lg text-foreground">Performance Ratings</h3>
+              <h3 className="font-display font-bold text-lg text-foreground">
+                Performance Ratings
+              </h3>
             </div>
             <span className="text-xs text-text-muted font-mono">Rating Scale: 0.0 - 10.0</span>
           </div>
@@ -155,7 +172,9 @@ export const CarDetailPage: React.FC = () => {
         <div className="lg:col-span-6 bg-card border border-border rounded-2xl p-6 space-y-6 shadow-sm">
           <div className="flex items-center space-x-2 pb-3 border-b border-border">
             <Cpu className="w-5 h-5 text-primary" />
-            <h3 className="font-display font-bold text-lg text-foreground">Technical Specifications</h3>
+            <h3 className="font-display font-bold text-lg text-foreground">
+              Technical Specifications
+            </h3>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -191,7 +210,9 @@ export const CarDetailPage: React.FC = () => {
           {/* Engine Specs Subpanel */}
           {car.engine && (
             <div className="bg-surface p-4 rounded-xl border border-border space-y-3">
-              <h4 className="text-xs uppercase font-extrabold tracking-wider text-primary">Powertrain & Engine</h4>
+              <h4 className="text-xs uppercase font-extrabold tracking-wider text-primary">
+                Powertrain & Engine
+              </h4>
               <div className="grid grid-cols-2 gap-y-2 text-xs">
                 <div>
                   <span className="text-text-muted">Engine Layout:</span>{' '}
@@ -222,11 +243,16 @@ export const CarDetailPage: React.FC = () => {
         <div className="bg-card border border-border rounded-2xl p-6 space-y-4 shadow-sm">
           <div className="flex items-center space-x-2">
             <ShieldCheck className="w-5 h-5 text-success" />
-            <h3 className="font-display font-bold text-lg text-foreground">Data Attribution & Verification</h3>
+            <h3 className="font-display font-bold text-lg text-foreground">
+              Data Attribution & Verification
+            </h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {car.sources.map((src) => (
-              <div key={src.id} className="bg-surface p-3.5 rounded-xl border border-border flex justify-between items-center text-xs">
+              <div
+                key={src.id}
+                className="bg-surface p-3.5 rounded-xl border border-border flex justify-between items-center text-xs"
+              >
                 <div>
                   <div className="font-bold text-foreground flex items-center space-x-1.5">
                     <span>{src.sourceName}</span>

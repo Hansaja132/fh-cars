@@ -87,7 +87,9 @@ export const AdminDashboard: React.FC = () => {
 
   const renderSortIcon = (field: string) => {
     if (sortField !== field) {
-      return <ArrowUpDown className="w-3 h-3 text-text-muted opacity-50 group-hover:opacity-100 transition-opacity" />;
+      return (
+        <ArrowUpDown className="w-3 h-3 text-text-muted opacity-50 group-hover:opacity-100 transition-opacity" />
+      );
     }
     return sortOrder === 'asc' ? (
       <ArrowUp className="w-3 h-3 text-primary" />
@@ -131,9 +133,7 @@ export const AdminDashboard: React.FC = () => {
 
   const saveMutation = useMutation({
     mutationFn: (data: any) =>
-      editingCar
-        ? apiService.updateCar(editingCar.id, data)
-        : apiService.createCar(data),
+      editingCar ? apiService.updateCar(editingCar.id, data) : apiService.createCar(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminCars'] });
       queryClient.invalidateQueries({ queryKey: ['cars'] });
@@ -234,10 +234,11 @@ export const AdminDashboard: React.FC = () => {
         sortOrder: carImages.length,
       };
       setCarImages((prev) => [...prev, newImage]);
-
     } catch (err: any) {
       console.error('Failed to upload image:', err);
-      setUploadError(err?.response?.data?.message || 'Failed to upload image to Supabase storage bucket.');
+      setUploadError(
+        err?.response?.data?.message || 'Failed to upload image to Supabase storage bucket.'
+      );
     } finally {
       setIsUploading(false);
       e.target.value = '';
@@ -277,8 +278,10 @@ export const AdminDashboard: React.FC = () => {
 
   const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    const fullName = formState.fullName || `${formState.year} ${brands.find(b=>b.id===formState.brandId)?.name || ''} ${formState.model}`;
-    
+    const fullName =
+      formState.fullName ||
+      `${formState.year} ${brands.find((b) => b.id === formState.brandId)?.name || ''} ${formState.model}`;
+
     saveMutation.mutate({
       year: Number(formState.year),
       brandId: Number(formState.brandId),
@@ -315,9 +318,12 @@ export const AdminDashboard: React.FC = () => {
             <Shield className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="font-display font-extrabold text-2xl text-foreground">Admin Control Center</h1>
+            <h1 className="font-display font-extrabold text-2xl text-foreground">
+              Admin Control Center
+            </h1>
             <p className="text-xs text-text-muted">
-              Authenticated as <strong className="text-foreground">{user?.email}</strong> ({user?.role})
+              Authenticated as <strong className="text-foreground">{user?.email}</strong> (
+              {user?.role})
             </p>
           </div>
         </div>
@@ -345,7 +351,9 @@ export const AdminDashboard: React.FC = () => {
         <button
           onClick={() => setActiveTab('cars')}
           className={`pb-3 font-display font-bold text-sm border-b-2 transition-colors ${
-            activeTab === 'cars' ? 'text-primary border-primary' : 'text-text-muted border-transparent hover:text-foreground'
+            activeTab === 'cars'
+              ? 'text-primary border-primary'
+              : 'text-text-muted border-transparent hover:text-foreground'
           }`}
         >
           Manage Cars Catalog ({carsData?.pagination.total ?? 0})
@@ -353,7 +361,9 @@ export const AdminDashboard: React.FC = () => {
         <button
           onClick={() => setActiveTab('audit')}
           className={`pb-3 font-display font-bold text-sm border-b-2 transition-colors ${
-            activeTab === 'audit' ? 'text-primary border-primary' : 'text-text-muted border-transparent hover:text-foreground'
+            activeTab === 'audit'
+              ? 'text-primary border-primary'
+              : 'text-text-muted border-transparent hover:text-foreground'
           }`}
         >
           Audit Log Records
@@ -479,7 +489,9 @@ export const AdminDashboard: React.FC = () => {
                       <td className="p-3.5">
                         <ClassBadge className={car.class} pi={car.basePi} size="sm" />
                       </td>
-                      <td className="p-3.5 font-mono font-bold text-text-secondary">{car.drivetrain}</td>
+                      <td className="p-3.5 font-mono font-bold text-text-secondary">
+                        {car.drivetrain}
+                      </td>
                       <td className="p-3.5 text-text-muted">{car.year}</td>
                       <td className="p-3.5 text-right space-x-2">
                         <button
@@ -544,7 +556,9 @@ export const AdminDashboard: React.FC = () => {
                 </span>
 
                 <button
-                  onClick={() => setPage((p) => Math.min(carsData.pagination.totalPages || 1, p + 1))}
+                  onClick={() =>
+                    setPage((p) => Math.min(carsData.pagination.totalPages || 1, p + 1))
+                  }
                   disabled={page >= (carsData.pagination.totalPages || 1)}
                   className="px-3 py-1.5 bg-surface hover:bg-elevated border border-border rounded-xl font-semibold flex items-center space-x-1 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
@@ -563,7 +577,10 @@ export const AdminDashboard: React.FC = () => {
           <h3 className="font-display font-bold text-lg text-foreground">System Audit Trail</h3>
           <div className="space-y-2">
             {auditLogs.map((log) => (
-              <div key={log.id} className="bg-surface p-3.5 rounded-xl border border-border text-xs flex justify-between items-center">
+              <div
+                key={log.id}
+                className="bg-surface p-3.5 rounded-xl border border-border text-xs flex justify-between items-center"
+              >
                 <div>
                   <div className="font-bold text-foreground flex items-center space-x-2">
                     <span className="bg-primary/10 text-primary px-2 py-0.5 rounded font-mono text-[10px] border border-primary/20">
@@ -592,7 +609,10 @@ export const AdminDashboard: React.FC = () => {
               <h3 className="font-display font-bold text-xl text-foreground">
                 {editingCar ? `Edit Car: ${editingCar.model}` : 'Create New Forza Horizon 6 Car'}
               </h3>
-              <button onClick={() => setModalOpen(false)} className="text-text-muted hover:text-foreground">
+              <button
+                onClick={() => setModalOpen(false)}
+                className="text-text-muted hover:text-foreground"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -615,7 +635,9 @@ export const AdminDashboard: React.FC = () => {
                   <label className="text-text-secondary font-semibold">Brand / Manufacturer</label>
                   <select
                     value={formState.brandId}
-                    onChange={(e) => setFormState({ ...formState, brandId: Number(e.target.value) })}
+                    onChange={(e) =>
+                      setFormState({ ...formState, brandId: Number(e.target.value) })
+                    }
                     className="w-full bg-surface text-foreground rounded-lg p-2.5 border border-border mt-1 focus:outline-none focus:border-primary"
                   >
                     {brands.map((b) => (
@@ -652,7 +674,9 @@ export const AdminDashboard: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="text-text-secondary font-semibold">Base PI Rating (100 - 999)</label>
+                  <label className="text-text-secondary font-semibold">
+                    Base PI Rating (100 - 999)
+                  </label>
                   <input
                     type="number"
                     min="100"
@@ -691,7 +715,9 @@ export const AdminDashboard: React.FC = () => {
                       min="0"
                       max="10"
                       value={formState.speed}
-                      onChange={(e) => setFormState({ ...formState, speed: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setFormState({ ...formState, speed: Number(e.target.value) })
+                      }
                       className="w-full bg-surface text-foreground rounded p-2 border border-border mt-1 focus:outline-none focus:border-primary"
                     />
                   </div>
@@ -703,7 +729,9 @@ export const AdminDashboard: React.FC = () => {
                       min="0"
                       max="10"
                       value={formState.handling}
-                      onChange={(e) => setFormState({ ...formState, handling: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setFormState({ ...formState, handling: Number(e.target.value) })
+                      }
                       className="w-full bg-surface text-foreground rounded p-2 border border-border mt-1 focus:outline-none focus:border-primary"
                     />
                   </div>
@@ -715,7 +743,9 @@ export const AdminDashboard: React.FC = () => {
                       min="0"
                       max="10"
                       value={formState.acceleration}
-                      onChange={(e) => setFormState({ ...formState, acceleration: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setFormState({ ...formState, acceleration: Number(e.target.value) })
+                      }
                       className="w-full bg-surface text-foreground rounded p-2 border border-border mt-1 focus:outline-none focus:border-primary"
                     />
                   </div>
@@ -808,12 +838,17 @@ export const AdminDashboard: React.FC = () => {
                             onChange={(e) => {
                               const newAlt = e.target.value;
                               setCarImages((prev) =>
-                                prev.map((item, i) => (i === idx ? { ...item, altText: newAlt } : item))
+                                prev.map((item, i) =>
+                                  i === idx ? { ...item, altText: newAlt } : item
+                                )
                               );
                             }}
                             className="w-full bg-transparent text-xs text-foreground placeholder:text-text-muted border-b border-transparent hover:border-border focus:border-primary focus:outline-none py-0.5"
                           />
-                          <div className="text-[10px] text-text-muted truncate mt-0.5" title={img.imageUrl}>
+                          <div
+                            className="text-[10px] text-text-muted truncate mt-0.5"
+                            title={img.imageUrl}
+                          >
                             {img.imageUrl}
                           </div>
                         </div>

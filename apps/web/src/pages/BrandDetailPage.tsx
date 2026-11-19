@@ -8,21 +8,32 @@ import { ArrowLeft, Building2 } from 'lucide-react';
 export const BrandDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
 
-  const { data: brand, isLoading, isError } = useQuery({
+  const {
+    data: brand,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ['brand', slug],
     queryFn: () => apiService.getBrandBySlug(slug || ''),
     enabled: !!slug,
   });
 
   if (isLoading) {
-    return <div className="max-w-7xl mx-auto px-4 py-16 text-center text-text-muted">Loading brand details...</div>;
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-16 text-center text-text-muted">
+        Loading brand details...
+      </div>
+    );
   }
 
   if (isError || !brand) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center space-y-4">
         <h2 className="text-2xl font-bold text-foreground">Brand Not Found</h2>
-        <Link to="/brands" className="inline-block bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs px-5 py-2.5 rounded-xl shadow">
+        <Link
+          to="/brands"
+          className="inline-block bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs px-5 py-2.5 rounded-xl shadow"
+        >
           Back to Brands
         </Link>
       </div>
@@ -31,7 +42,10 @@ export const BrandDetailPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 transition-colors">
-      <Link to="/brands" className="inline-flex items-center space-x-2 text-xs font-semibold text-text-muted hover:text-foreground transition-colors">
+      <Link
+        to="/brands"
+        className="inline-flex items-center space-x-2 text-xs font-semibold text-text-muted hover:text-foreground transition-colors"
+      >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to All Brands</span>
       </Link>

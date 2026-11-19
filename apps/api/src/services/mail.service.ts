@@ -50,7 +50,9 @@ export class MailService {
         });
         console.log(`✅ [MAIL SERVICE] Email delivered successfully to ${options.to}`);
       } else {
-        console.log(`ℹ️ [MAIL SERVICE] SMTP_USER/SMTP_PASS not set in .env. Email logged above for dev.`);
+        console.log(
+          `ℹ️ [MAIL SERVICE] SMTP_USER/SMTP_PASS not set in .env. Email logged above for dev.`
+        );
       }
       return true;
     } catch (err: any) {
@@ -91,7 +93,11 @@ export class MailService {
   /**
    * Sends security alert notification email when user logs in
    */
-  public async sendLoginNotification(toEmail: string, loginTime: Date = new Date(), ipAddress?: string): Promise<boolean> {
+  public async sendLoginNotification(
+    toEmail: string,
+    loginTime: Date = new Date(),
+    ipAddress?: string
+  ): Promise<boolean> {
     const subject = 'FH6 Cars Admin — Security Alert: New Account Login';
     const formattedTime = loginTime.toUTCString();
 

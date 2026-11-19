@@ -24,11 +24,9 @@ export class AuthService {
 
     await this.adminRepo.updateLastLogin(user.id);
 
-    const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
-      env.JWT_SECRET,
-      { expiresIn: env.JWT_EXPIRES_IN as any }
-    );
+    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, env.JWT_SECRET, {
+      expiresIn: env.JWT_EXPIRES_IN as any,
+    });
 
     await this.adminRepo.createAuditLog({
       adminUserId: user.id,
@@ -64,7 +62,9 @@ export class AuthService {
   async requestPasswordReset(email: string) {
     const user = await this.adminRepo.findByEmail(email);
     if (!user || !user.isActive) {
-      return { message: 'If an active account exists with that email, a verification code has been sent.' };
+      return {
+        message: 'If an active account exists with that email, a verification code has been sent.',
+      };
     }
 
     const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -81,7 +81,9 @@ export class AuthService {
 
     await this.mailService.sendVerificationCode(email, code);
 
-    return { message: 'If an active account exists with that email, a verification code has been sent.' };
+    return {
+      message: 'If an active account exists with that email, a verification code has been sent.',
+    };
   }
 
   async resetPassword(email: string, code: string, newPassword: string) {
@@ -123,6 +125,8 @@ export class AuthService {
       details: `Password reset successfully via verification code for ${user.email}`,
     });
 
-    return { message: 'Password has been reset successfully. You can now log in with your new password.' };
+    return {
+      message: 'Password has been reset successfully. You can now log in with your new password.',
+    };
   }
 }

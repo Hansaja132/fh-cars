@@ -23,14 +23,19 @@ export class StorageService {
       const { data: bucket, error } = await supabaseClient.storage.getBucket(BUCKET_NAME);
 
       if (error || !bucket) {
-        console.warn(`[StorageService] Bucket "${BUCKET_NAME}" not found in Supabase. Creating public bucket...`);
+        console.warn(
+          `[StorageService] Bucket "${BUCKET_NAME}" not found in Supabase. Creating public bucket...`
+        );
         const { error: createError } = await supabaseClient.storage.createBucket(BUCKET_NAME, {
           public: true,
           fileSizeLimit: 10 * 1024 * 1024,
         });
 
         if (createError) {
-          console.error(`[StorageService] Failed to create bucket "${BUCKET_NAME}":`, createError.message);
+          console.error(
+            `[StorageService] Failed to create bucket "${BUCKET_NAME}":`,
+            createError.message
+          );
         } else {
           console.log(`[StorageService] Successfully created public bucket "${BUCKET_NAME}".`);
         }
@@ -98,7 +103,9 @@ export class StorageService {
         fileExt = '.svg';
       }
 
-      const fileBaseName = path.basename(file.originalname, path.extname(file.originalname)).replace(/[^a-zA-Z0-9]/g, '_');
+      const fileBaseName = path
+        .basename(file.originalname, path.extname(file.originalname))
+        .replace(/[^a-zA-Z0-9]/g, '_');
       const timestamp = Date.now();
       const fileName = `${folder}/${timestamp}_${fileBaseName}${fileExt}`;
       const thumbFileName = `${folder}/thumbnails/thumb_${timestamp}_${fileBaseName}${fileExt}`;
@@ -113,7 +120,11 @@ export class StorageService {
 
       if (mainError) {
         console.error('[StorageService Upload Error]:', mainError.message);
-        throw new AppError(`Failed to upload image to Supabase: ${mainError.message}`, 500, 'STORAGE_UPLOAD_ERROR');
+        throw new AppError(
+          `Failed to upload image to Supabase: ${mainError.message}`,
+          500,
+          'STORAGE_UPLOAD_ERROR'
+        );
       }
 
       // Upload thumbnail
@@ -189,9 +200,7 @@ export class StorageService {
     if (!filePath) return false;
 
     try {
-      const { error } = await supabaseClient.storage
-        .from(BUCKET_NAME)
-        .remove([filePath]);
+      const { error } = await supabaseClient.storage.from(BUCKET_NAME).remove([filePath]);
 
       if (error) {
         console.error('[StorageService Delete Error]:', error.message);

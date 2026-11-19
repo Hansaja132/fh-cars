@@ -10,9 +10,12 @@ export const AboutPage: React.FC = () => {
           <Database className="w-4 h-4 text-primary" />
           <span>About FH6 Cars Platform</span>
         </div>
-        <h1 className="font-display font-extrabold text-4xl text-foreground">Public Car Database & REST API</h1>
+        <h1 className="font-display font-extrabold text-4xl text-foreground">
+          Public Car Database & REST API
+        </h1>
         <p className="text-text-secondary text-sm max-w-2xl mx-auto leading-relaxed">
-          FH6 Cars provides a centralized, normalized repository of Forza Horizon 6 car statistics, base PI ratings, engine specs, and manufacturers.
+          FH6 Cars provides a centralized, normalized repository of Forza Horizon 6 car statistics,
+          base PI ratings, engine specs, and manufacturers.
         </p>
       </div>
 
@@ -22,9 +25,12 @@ export const AboutPage: React.FC = () => {
           <div className="p-3 bg-primary/10 text-primary rounded-xl w-fit">
             <Cpu className="w-5 h-5" />
           </div>
-          <h3 className="font-display font-bold text-lg text-foreground">Standalone Static Database</h3>
+          <h3 className="font-display font-bold text-lg text-foreground">
+            Standalone Static Database
+          </h3>
           <p className="text-xs text-text-muted leading-relaxed">
-            This platform is strictly an informational database and public REST API. It does NOT implement telemetry, Socket.IO, game memory reading, or live racing calculations.
+            This platform is strictly an informational database and public REST API. It does NOT
+            implement telemetry, Socket.IO, game memory reading, or live racing calculations.
           </p>
         </div>
 
@@ -32,9 +38,12 @@ export const AboutPage: React.FC = () => {
           <div className="p-3 bg-success/10 text-success rounded-xl w-fit">
             <ShieldCheck className="w-5 h-5" />
           </div>
-          <h3 className="font-display font-bold text-lg text-foreground">Data Quality & Provenance</h3>
+          <h3 className="font-display font-bold text-lg text-foreground">
+            Data Quality & Provenance
+          </h3>
           <p className="text-xs text-text-muted leading-relaxed">
-            We prioritize accuracy. Missing or unverified statistics are stored as nulls rather than fabricated numbers. Every entry tracks its source and verification status.
+            We prioritize accuracy. Missing or unverified statistics are stored as nulls rather than
+            fabricated numbers. Every entry tracks its source and verification status.
           </p>
         </div>
       </div>

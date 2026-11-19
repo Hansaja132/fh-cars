@@ -21,7 +21,9 @@ async function main() {
   const adminUsername = process.env.INITIAL_ADMIN_USERNAME;
 
   if (!adminEmail || !adminPassword) {
-    console.warn('⚠️ INITIAL_ADMIN_EMAIL or INITIAL_ADMIN_PASSWORD not set in environment. Skipping initial admin user creation.');
+    console.warn(
+      '⚠️ INITIAL_ADMIN_EMAIL or INITIAL_ADMIN_PASSWORD not set in environment. Skipping initial admin user creation.'
+    );
   } else {
     const existingAdmin = await prisma.adminUser.findUnique({
       where: { email: adminEmail },
@@ -186,7 +188,9 @@ async function main() {
         images: {
           create: [
             {
-              imageUrl: item.imageUrl || 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80',
+              imageUrl:
+                item.imageUrl ||
+                'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80',
               thumbnailUrl: item.imageUrl || null,
               altText: fullName,
               isPrimary: true,
@@ -208,7 +212,9 @@ async function main() {
       },
     });
 
-    console.log(`✅ Inserted car: ${createdCar.fullName} (Class ${createdCar.class} PI ${createdCar.basePi})`);
+    console.log(
+      `✅ Inserted car: ${createdCar.fullName} (Class ${createdCar.class} PI ${createdCar.basePi})`
+    );
   }
 
   console.log('🎉 Database seeding complete!');

@@ -148,13 +148,49 @@ export const Navbar: React.FC = () => {
             />
           </form>
           <div className="flex flex-col space-y-2 pt-2 text-sm font-medium">
-            <Link to="/cars" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary py-1.5">Browse Cars</Link>
-            <Link to="/brands" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary py-1.5">Brands</Link>
-            <Link to="/compare" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary py-1.5">Compare Cars</Link>
-            <Link to="/api" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary py-1.5">API Docs</Link>
-            <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-primary py-1.5">About</Link>
+            <Link
+              to="/cars"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-foreground hover:text-primary py-1.5"
+            >
+              Browse Cars
+            </Link>
+            <Link
+              to="/brands"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-foreground hover:text-primary py-1.5"
+            >
+              Brands
+            </Link>
+            <Link
+              to="/compare"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-foreground hover:text-primary py-1.5"
+            >
+              Compare Cars
+            </Link>
+            <Link
+              to="/api"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-foreground hover:text-primary py-1.5"
+            >
+              API Docs
+            </Link>
+            <Link
+              to="/about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-foreground hover:text-primary py-1.5"
+            >
+              About
+            </Link>
             {isAuthenticated && (
-              <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="text-primary py-1.5 font-bold">Admin Dashboard</Link>
+              <Link
+                to="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-primary py-1.5 font-bold"
+              >
+                Admin Dashboard
+              </Link>
             )}
           </div>
         </div>
