@@ -10,7 +10,9 @@ import {
   AuditLog,
 } from '@fh6-cars/shared';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
+// VITE_API_URL is the backend origin (e.g. http://localhost:5000); the API version prefix is appended here.
+const API_ORIGIN = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+const API_BASE_URL = `${API_ORIGIN}/api/v1`;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
