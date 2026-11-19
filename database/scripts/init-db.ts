@@ -61,7 +61,9 @@ async function initDatabase() {
       console.warn(`⚠️  Note on PostgreSQL server check: ${err.message}`);
       try {
         await client.end();
-      } catch {}
+      } catch {
+        // Ignore cleanup errors when closing the failed connection
+      }
     }
   }
 

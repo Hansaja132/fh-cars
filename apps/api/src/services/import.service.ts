@@ -10,7 +10,7 @@ export class ImportService {
   private adminRepo = new AdminRepository();
 
   async importCars(content: string, fileType: 'json' | 'csv', adminUserId?: number) {
-    let records: any[] = [];
+    let records: unknown[];
     const details: string[] = [];
 
     try {
@@ -62,7 +62,7 @@ export class ImportService {
 
     let inserted = 0;
     let updated = 0;
-    let skipped = 0;
+    const skipped = 0;
     let errors = 0;
 
     for (let index = 0; index < records.length; index++) {

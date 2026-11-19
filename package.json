@@ -15,7 +15,8 @@
     "db:seed": "pnpm --filter database db:seed",
     "db:studio": "pnpm --filter database db:studio",
     "test": "pnpm --filter \"./apps/*\" test",
-    "lint": "echo \"No lint errors\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -32,6 +33,13 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "prettier": "^3.10.1"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.8",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
+    "typescript-eslint": "^8.73.0"
   }
 }
