@@ -10,8 +10,11 @@ import {
   AuditLog,
 } from '@fh6-cars/shared';
 
-// VITE_API_URL is the backend origin (e.g. http://localhost:5000); the API version prefix is appended here.
-const API_ORIGIN = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+// In dev mode, use a relative path so Vite's dev proxy forwards /api to VITE_API_URL (avoiding CORS).
+// In production builds, call VITE_API_URL directly.
+const API_ORIGIN = import.meta.env.DEV
+  ? ''
+  : (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
 const API_BASE_URL = `${API_ORIGIN}/api/v1`;
 
 export const apiClient = axios.create({

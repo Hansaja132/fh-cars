@@ -12,11 +12,16 @@ import v1Router from './routes/v1';
 
 const app = express();
 
+const allowedOrigins = env.CORS_ORIGIN.split(',')
+  .map((origin) => origin.trim().replace(/\/+$/, ''))
+  .filter(Boolean);
+
+console.log(allowedOrigins);
 // Security & CORS
 app.use(helmet());
 app.use(
   cors({
-    origin: env.CORS_ORIGIN,
+    origin: allowedOrigins.includes('*') ? true : allowedOrigins,
     credentials: true,
   })
 );
